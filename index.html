@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1">
+<meta name="theme-color" content="#0F1E38">
+<title>Sicily &amp; Rome · Miller 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --terra:#C4532A; --terra-deep:#9A3D1E;
+  --gold:#C9913D; --navy:#1A2B4A; --navy-deep:#0F1E38;
+  --sea:#2E6B8A; --olive:#6B7B3A;
+  --cream:#F7F2E8; --paper:#FDFAF4; --sand:#E8DCC8;
+  --text:#2C2415; --soft:#6B5E4A;
+  --line:rgba(26,21,16,.10); --line2:rgba(26,21,16,.16);
+  --ok:#3f9d52; --pending:#C9913D;
+  --shadow:0 1px 2px rgba(26,21,16,.05),0 6px 18px rgba(26,21,16,.08);
+  --maxw:560px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{background:var(--paper);}
+body{
+  font-family:'DM Sans',sans-serif;color:var(--text);line-height:1.5;
+  -webkit-font-smoothing:antialiased;padding-bottom:74px;overflow-x:hidden;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;}
+.pad{padding:0 16px;}
+
+/* ===== top bar ===== */
+.topbar{
+  position:sticky;top:0;z-index:40;background:var(--navy-deep);color:var(--cream);
+  padding:calc(env(safe-area-inset-top) + 11px) 16px 11px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  box-shadow:0 4px 16px rgba(15,30,56,.25);
+}
+.topbar .tt{font-family:'Playfair Display',serif;font-weight:800;font-size:18px;line-height:1;}
+.topbar .tt em{color:var(--terra);font-style:italic;}
+.topbar .sub{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:rgba(247,242,232,.5);margin-top:3px;}
+.today-btn{
+  background:var(--terra);color:#fff;border:0;border-radius:999px;
+  font-family:inherit;font-weight:600;font-size:12px;letter-spacing:.04em;
+  padding:8px 15px;cursor:pointer;flex-shrink:0;box-shadow:0 2px 8px rgba(154,61,30,.4);
+}
+.today-btn:active{transform:scale(.96);}
+
+/* ===== views ===== */
+.view{display:none;animation:fade .3s ease;}
+.view.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== phase rail (trip view) ===== */
+.hero{
+  background:
+    radial-gradient(ellipse at 75% 20%,rgba(196,83,42,.30),transparent 55%),
+    radial-gradient(ellipse at 15% 90%,rgba(46,107,138,.30),transparent 55%),
+    linear-gradient(160deg,#0D1B35,#1A2B4A 55%,#0F1E38);
+  color:var(--cream);padding:26px 16px 22px;position:relative;overflow:hidden;
+}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;
+  background:linear-gradient(90deg,var(--terra),var(--gold),var(--sea));}
+.hero .eyebrow{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);}
+.hero h1{font-family:'Playfair Display',serif;font-weight:800;font-size:38px;line-height:.95;margin:8px 0 4px;}
+.hero h1 em{font-style:italic;color:var(--terra);}
+.hero .tagline{font-size:13px;color:rgba(247,242,232,.65);margin-bottom:16px;}
+.hero .stats{display:flex;gap:18px;flex-wrap:wrap;}
+.hero .stat .n{font-family:'Playfair Display',serif;font-weight:800;font-size:24px;color:var(--gold);line-height:1;}
+.hero .stat .l{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(247,242,232,.5);margin-top:2px;}
+.hero .party{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px;}
+.chip{background:rgba(201,145,61,.14);border:1px solid rgba(201,145,61,.32);color:var(--cream);
+  font-size:12px;padding:5px 12px;border-radius:30px;}
+
+.phase{margin:22px 0 4px;}
+.phase-h{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;}
+.phase-h .pn{font-family:'Playfair Display',serif;font-weight:800;font-size:30px;color:rgba(196,83,42,.20);line-height:1;}
+.phase-h .pt{font-family:'Playfair Display',serif;font-weight:700;font-size:19px;color:var(--navy);}
+.phase-h .pd{font-size:12px;color:var(--soft);font-style:italic;}
+
+.daylist{display:flex;flex-direction:column;gap:9px;}
+.daycard{
+  display:flex;align-items:stretch;gap:0;background:#fff;border-radius:14px;overflow:hidden;
+  box-shadow:var(--shadow);cursor:pointer;border:1px solid var(--line);transition:transform .12s;
+}
+.daycard:active{transform:scale(.985);}
+.daycard .num{
+  flex-shrink:0;width:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:#fff;padding:10px 6px;position:relative;
+}
+.daycard .num .d{font-family:'Playfair Display',serif;font-weight:800;font-size:26px;line-height:1;}
+.daycard .num .dl{font-size:8px;letter-spacing:.1em;text-transform:uppercase;opacity:.6;margin-top:2px;}
+.daycard .num .dt{font-size:10px;opacity:.7;margin-top:5px;text-align:center;line-height:1.2;}
+.t-travel .num{background:#1A3A5C;}
+.t-minerva .num{background:#2C1A10;}
+.t-aljafar .num{background:#1A2C10;}
+.t-rome .num{background:#2C1520;}
+.t-florence .num{background:#1A1A2C;}
+.daycard .body{padding:11px 13px;flex:1;min-width:0;}
+.daycard .body h3{font-family:'Playfair Display',serif;font-weight:700;font-size:16px;color:var(--navy);line-height:1.15;}
+.daycard .body .s{font-size:12px;color:var(--soft);margin-top:3px;line-height:1.35;}
+.daycard .body .mini{margin-top:7px;display:flex;flex-wrap:wrap;gap:5px;}
+.mtag{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;letter-spacing:.02em;}
+.mtag.dining{background:rgba(196,83,42,.10);color:var(--terra-deep);}
+.mtag.culture{background:rgba(26,43,74,.08);color:var(--navy);}
+.mtag.beach{background:rgba(46,107,138,.12);color:var(--sea);}
+.mtag.villa{background:rgba(107,123,58,.12);color:var(--olive);}
+.mtag.travel{background:rgba(201,145,61,.16);color:#876012;}
+.daycard.istoday{border:2px solid var(--terra);}
+.todaybadge{display:inline-block;background:var(--terra);color:#fff;font-size:9px;font-weight:700;letter-spacing:.08em;padding:2px 7px;border-radius:5px;text-transform:uppercase;margin-bottom:4px;}
+
+/* ===== day detail ===== */
+.detail-hd{color:#fff;padding:calc(env(safe-area-inset-top));position:relative;}
+.detail-hd .inner{padding:18px 16px 20px;}
+.t-travel.detail-hd{background:linear-gradient(150deg,#1A3A5C,#0F2438);}
+.t-minerva.detail-hd{background:linear-gradient(150deg,#3a2415,#1c1009);}
+.t-aljafar.detail-hd{background:linear-gradient(150deg,#243d16,#101f08);}
+.t-rome.detail-hd{background:linear-gradient(150deg,#3a1c2a,#1a0c14);}
+.t-florence.detail-hd{background:linear-gradient(150deg,#26263a,#13131f);}
+.backrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.back{background:rgba(255,255,255,.12);border:0;color:#fff;font-family:inherit;font-size:13px;font-weight:600;
+  padding:7px 13px 7px 9px;border-radius:30px;cursor:pointer;display:flex;align-items:center;gap:4px;}
+.back:active{background:rgba(255,255,255,.2);}
+.daynav{display:flex;gap:6px;}
+.daynav button{background:rgba(255,255,255,.12);border:0;color:#fff;width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer;}
+.daynav button:disabled{opacity:.3;}
+.detail-hd .meta{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);}
+.detail-hd h2{font-family:'Playfair Display',serif;font-weight:800;font-size:27px;line-height:1.05;margin:6px 0 5px;}
+.detail-hd .ds{font-size:13.5px;color:rgba(255,255,255,.72);font-style:italic;}
+
+.timeline{padding:18px 16px 8px;}
+.tl{display:flex;gap:12px;padding-bottom:16px;position:relative;}
+.tl::before{content:"";position:absolute;left:6px;top:16px;bottom:-2px;width:1.5px;background:var(--line2);}
+.tl:last-child::before{display:none;}
+.tl .dot{width:13px;height:13px;border-radius:50%;background:var(--sand);border:2.5px solid var(--paper);flex-shrink:0;margin-top:3px;z-index:1;box-shadow:0 0 0 1px var(--line2);}
+.tl .dot.hi{background:var(--terra);}
+.tl .dot.ok{background:var(--ok);}
+.tl .dot.pd{background:var(--pending);}
+.tl .c{flex:1;min-width:0;}
+.tl .time{font-size:11px;font-weight:700;color:var(--terra);letter-spacing:.03em;margin-bottom:2px;}
+.tl .txt{font-size:14px;line-height:1.5;color:var(--text);}
+.tl .txt strong{color:var(--navy);font-weight:600;}
+
+.block{border-radius:12px;padding:13px 15px;margin:4px 16px 14px;font-size:13.5px;line-height:1.5;}
+.block .bh{font-size:15px;font-family:'Playfair Display',serif;font-weight:700;color:var(--navy);margin-bottom:3px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.block .bd{font-size:12.5px;color:var(--soft);line-height:1.5;}
+.block.resto{background:var(--cream);border-left:3px solid var(--terra);}
+.block.menu{background:linear-gradient(135deg,rgba(196,83,42,.05),rgba(201,145,61,.08));border:1px solid rgba(196,83,42,.16);}
+.block.flight{background:rgba(26,43,74,.05);border:1px solid rgba(26,43,74,.12);}
+.block.alert{background:rgba(201,145,61,.12);border:1px solid rgba(201,145,61,.32);color:#7A5C0A;}
+.block.split{background:rgba(107,123,58,.09);border-left:3px solid var(--olive);}
+.block.decision{background:rgba(196,83,42,.06);border:1px dashed rgba(196,83,42,.34);}
+.block.alert .bd,.block.split .bd,.block.decision .bd{color:inherit;}
+
+.menucourse{display:flex;gap:10px;margin-top:6px;font-size:13px;}
+.menucourse .lab{font-style:italic;color:var(--soft);min-width:64px;flex-shrink:0;}
+.flightrow{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.flightrow .rt{font-family:'Playfair Display',serif;font-weight:700;font-size:17px;color:var(--navy);}
+.flightrow .fd{font-size:12px;color:var(--soft);}
+
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px;}
+.btn{display:inline-flex;align-items:center;gap:5px;font-family:inherit;font-size:12.5px;font-weight:600;
+  border:0;border-radius:9px;padding:8px 12px;cursor:pointer;text-decoration:none;}
+.btn.call{background:var(--olive);color:#fff;}
+.btn.map{background:var(--sea);color:#fff;}
+.btn.web{background:var(--navy);color:#fff;}
+.btn.book{background:var(--terra);color:#fff;}
+.btn:active{opacity:.8;}
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.02em;}
+.badge.ok{background:rgba(63,157,82,.14);color:#2c7a3c;}
+.badge.pd{background:rgba(201,145,61,.16);color:#946c10;}
+.badge.star{background:rgba(201,145,61,.16);color:#946c10;}
+
+/* ===== villa view ===== */
+.vhero{background:var(--navy-deep);color:var(--cream);padding:24px 16px 20px;}
+.vhero h2{font-family:'Playfair Display',serif;font-weight:800;font-size:28px;}
+.vhero h2 em{font-style:italic;color:var(--terra);}
+.vhero p{font-size:13px;color:rgba(247,242,232,.6);margin-top:4px;}
+.vtoggle{display:flex;gap:6px;background:rgba(255,255,255,.07);border-radius:999px;padding:5px;margin:14px 16px 0;}
+.vtoggle button{flex:1;border:0;background:transparent;color:rgba(247,242,232,.55);font-family:'Playfair Display',serif;
+  font-weight:600;font-size:16px;padding:9px 4px;border-radius:999px;cursor:pointer;transition:.3s;}
+.vtoggle button.active{background:var(--terra);color:#fff;}
+.vcard{background:#fff;border-radius:14px;box-shadow:var(--shadow);border:1px solid var(--line);margin:13px 16px;overflow:hidden;}
+.vrow{padding:14px 16px;border-bottom:1px solid var(--line);}
+.vrow:last-child{border-bottom:0;}
+.vrow .vlab{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--terra-deep);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.kv{display:flex;justify-content:space-between;gap:14px;font-size:14px;padding:3px 0;}
+.kv .k{color:var(--soft);}
+.kv .v{font-weight:600;text-align:right;}
+.copyrow{display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer;}
+.copyrow .v{font-weight:700;color:var(--navy);font-size:16px;}
+.copyhint{font-size:10px;color:var(--sea);font-weight:600;}
+.notdrink{color:var(--terra-deep);font-weight:700;}
+.drink{color:#2c7a3c;font-weight:700;}
+.vcontact{margin:13px 16px;background:rgba(201,145,61,.10);border:1px solid rgba(201,145,61,.3);border-radius:12px;padding:13px 15px;}
+.vcontact .l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#946c10;font-weight:700;}
+.vcontact .d{font-size:12.5px;color:var(--navy);margin:3px 0 8px;}
+
+/* ===== checklist view ===== */
+.clhero{background:var(--cream);padding:22px 16px 8px;}
+.clhero h2{font-family:'Playfair Display',serif;font-weight:800;font-size:26px;color:var(--navy);}
+.clhero h2 em{font-style:italic;color:var(--terra);}
+.clhero p{font-size:13px;color:var(--soft);margin-top:3px;}
+.progress{margin-top:12px;height:8px;background:rgba(26,21,16,.08);border-radius:10px;overflow:hidden;}
+.progress > div{height:100%;background:linear-gradient(90deg,var(--terra),var(--gold));border-radius:10px;transition:width .4s;}
+.progresslab{font-size:11px;color:var(--soft);margin-top:6px;font-weight:600;}
+.clgroup{margin:18px 16px 4px;}
+.clgroup .gh{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.clgroup.urgent .gh{color:var(--terra);}
+.clgroup.week .gh{color:#946c10;}
+.clgroup.confirm .gh{color:var(--sea);}
+.cl{display:flex;gap:12px;background:#fff;border-radius:11px;padding:13px 14px;margin-bottom:9px;box-shadow:var(--shadow);border:1px solid var(--line);align-items:flex-start;cursor:pointer;}
+.cl.urgentbar{border-left:3px solid var(--terra);}
+.cl .box{width:21px;height:21px;border:2px solid var(--sand);border-radius:6px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;transition:.2s;}
+.cl.done .box{background:var(--olive);border-color:var(--olive);}
+.cl .ct{flex:1;min-width:0;}
+.cl .ctt{font-size:14px;font-weight:600;color:var(--text);line-height:1.35;}
+.cl.done .ctt{text-decoration:line-through;color:var(--soft);}
+.cl .cd{font-size:11.5px;color:var(--soft);margin-top:3px;line-height:1.4;}
+.cl .cact{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;}
+.cl .btn{font-size:11.5px;padding:6px 10px;}
+
+/* ===== bottom nav ===== */
+nav.tabs{
+  position:fixed;bottom:0;left:0;right:0;z-index:50;max-width:var(--maxw);margin:0 auto;
+  background:rgba(253,250,244,.94);backdrop-filter:blur(14px);border-top:1px solid var(--line2);
+  display:flex;justify-content:space-around;padding:7px 4px calc(env(safe-area-inset-bottom) + 7px);
+}
+nav.tabs button{background:none;border:0;font-family:inherit;cursor:pointer;flex:1;
+  display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--soft);font-size:10px;font-weight:600;padding:3px 0;}
+nav.tabs button .ic{font-size:18px;line-height:1;}
+nav.tabs button.active{color:var(--terra-deep);}
+
+footer{text-align:center;font-size:11px;color:var(--soft);padding:24px 16px;}
+footer .ft{font-family:'Playfair Display',serif;font-weight:700;}
+footer .ft em{font-style:italic;color:var(--terra);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="topbar">
+  <div>
+    <div class="tt">Sicily <em>&amp; Rome</em></div>
+    <div class="sub">Miller Family · Jun 19 – Jul 3, 2026</div>
+  </div>
+  <button class="today-btn" onclick="goToday()">Today ›</button>
+</div>
+
+<!-- TRIP -->
+<section class="view active" id="v-trip">
+  <div class="hero">
+    <div class="eyebrow">An Italian Journey</div>
+    <h1>Villas, Temples <em>&amp; the Sea</em></h1>
+    <div class="tagline">13 days of ancient temples, crystalline coves, private villas & unforgettable dinners.</div>
+    <div class="stats">
+      <div class="stat"><div class="n">13</div><div class="l">Nights</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">Villas / Stays</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">UNESCO Sites</div></div>
+      <div class="stat"><div class="n">18+</div><div class="l">Restaurants</div></div>
+    </div>
+    <div class="party">
+      <span class="chip">Jeff</span><span class="chip">Katie</span><span class="chip">Jake (11)</span>
+      <span class="chip">Julia (8)</span><span class="chip">Mary Jo</span><span class="chip">Bev</span>
+      <span class="chip">Rich · Jun 20</span><span class="chip">Scott · Sicily</span>
+    </div>
+  </div>
+  <div class="pad" id="phase-rail"></div>
+  <footer>
+    <div class="ft">Sicily <em>&amp; Rome</em></div>
+    Mondello · Paceco · Rome · Florence
+  </footer>
+</section>
+
+<!-- DAY DETAIL -->
+<section class="view" id="v-day"></section>
+
+<!-- VILLAS -->
+<section class="view" id="v-villa">
+  <div class="vhero">
+    <h2>Villa <em>Quick Ref</em></h2>
+    <p>Everything for arrival day — WiFi, GPS, pools & staff.</p>
+  </div>
+  <div class="vtoggle">
+    <button id="vb-minerva" class="active" onclick="setVilla('minerva')">Minerva</button>
+    <button id="vb-aljafar" onclick="setVilla('aljafar')">Al Jafar</button>
+  </div>
+  <div id="villa-content"></div>
+  <footer><div class="ft">The Thinking Traveller</div>Your villa companion</footer>
+</section>
+
+<!-- CHECKLIST -->
+<section class="view" id="v-list">
+  <div class="clhero">
+    <h2>Before <em>You Go</em></h2>
+    <p>Everything still to book, confirm or decide. Tap to check off.</p>
+    <div class="progress"><div id="prog-bar"></div></div>
+    <div class="progresslab" id="prog-lab"></div>
+  </div>
+  <div id="checklist"></div>
+  <footer><div class="ft">Andiamo!</div>Buon viaggio, Miller family</footer>
+</section>
+
+</div>
+
+<nav class="tabs">
+  <button class="active" data-v="trip" onclick="setView('trip',this)"><span class="ic">◷</span>Itinerary</button>
+  <button data-v="villa" onclick="setView('villa',this)"><span class="ic">⌂</span>Villas</button>
+  <button data-v="list" onclick="setView('list',this)"><span class="ic">✓</span>To-Do</button>
+</nav>
+
+<script>
+/* ============ helpers ============ */
+const tel=n=>`<a class="btn call" href="tel:${n.replace(/[^+\d]/g,'')}">☎ Call</a>`;
+const mapBtn=(q)=>`<a class="btn map" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}">⌖ Map</a>`;
+const webBtn=(u,label)=>`<a class="btn web" target="_blank" rel="noopener" href="${u.startsWith('http')?u:'https://'+u}">↗ ${label||'Site'}</a>`;
+const bookBtn=(u,label)=>`<a class="btn book" target="_blank" rel="noopener" href="${u.startsWith('http')?u:'https://'+u}">✎ ${label||'Book'}</a>`;
+
+/* ============ DAYS DATA ============ */
+const PHASES=[
+  {n:"01",t:"Getting There",d:"Jun 19–20 · Boston → Sicily",days:[1]},
+  {n:"02",t:"Villa Minerva",d:"Jun 20–24 · Palermo & North Coast",days:[2,3,4,5]},
+  {n:"03",t:"Al Jafar Castle",d:"Jun 24–28 · Trapani Province",days:[6,7,8,9]},
+  {n:"04",t:"Rome",d:"Jun 28–Jul 1 · The Eternal City",days:[10,11,12,13]},
+  {n:"05",t:"Florence",d:"Jul 1–3 · Mary Jo & Bev",days:[14,15]}
+];
+
+const DAYS={
+1:{theme:"travel",date:"Fri Jun 19",dl:"Day 1",iso:"2026-06-19",title:"Depart Boston",sub:"Boston Logan → Rome → Palermo",mini:["travel:Travel Day"],
+  blocks:[
+    {type:"flight",route:"BOS → FCO",detail:"ITA Airways AZ615 · 5:05pm → 7:05am (+1)"},
+    {type:"flight",route:"FCO → PMO",detail:"ITA Airways AZ1785 · 10:20am → 11:30am"},
+    {type:"resto",h:"🛋️ Plaza Premium Lounge — FCO T1",bd:"Showers (30 min), unlimited food & drink, Wi-Fi · Priority Pass · Schengen Departures, Terminal 1 (onward boarding pass required)."}
+  ]},
+2:{theme:"minerva",date:"Sat Jun 20",dl:"Day 2",iso:"2026-06-20",title:"Arrival & Villa Minerva",sub:"Land Palermo · rental cars · Mondello",mini:["travel:Arrival","villa:Villa Night"],
+  tl:[
+    {time:"11:30am",txt:"Land at <strong>Palermo (PMO)</strong>. Collect 2 Europcar Opel Grandland Automatics — Jeff (#1198342651) & Bev (#1198342794)."},
+    {time:"12:30pm",txt:"Drive ~25 min to <strong>Villa Minerva</strong>, Mondello (Via Lugano 7).",map:"Via Lugano 7 Mondello Palermo"},
+    {time:"4:00pm",txt:"Check in. Settle, nap, pool & gardens."},
+    {time:"8:00pm",dot:"hi",txt:"Private cook arrives ~6pm; dinner served 8pm."}
+  ],
+  blocks:[
+    {type:"menu",h:"Private Cook — First Night",courses:[["Antipasto","Panelle — crispy chickpea fritters with lemon"],["Primo","Busiate con pesto alla trapanese — tomato, almonds, garlic, basil"],["Dolce","Granita di limone con pistacchi di Bronte & brioche"]]},
+    {type:"alert",h:"⚠️ Car rental",bd:"Bring driver's licence + credit card matching the driver's name for the security deposit."}
+  ]},
+3:{theme:"minerva",date:"Sun Jun 21",dl:"Day 3",iso:"2026-06-21",title:"Palermo Walking Tour",sub:"Baroque piazzas · markets · Norman treasures",mini:["culture:Culture","dining:2 Dinners"],
+  blocks:[{type:"split",h:"🔀 Monreale option for Bev",bd:"Visit Monreale Cathedral first (~20 min) — the world's greatest Norman mosaic cycle (6,000m² gold, 12th c.), open 9am–5:30pm. Rejoin at 1pm for Moltivolti lunch."}],
+  tl:[
+    {time:"10:30am",txt:"Drive to Palermo (~25 min). Park at <strong>Parcheggio del Centrostorico</strong>, Via Rossini 14 (24h, ~€20–25 half day; staff handle ZTL). Don't drive into the historic centre.",map:"Parcheggio Centro Storico Via Rossini Palermo"},
+    {time:"10:30am",txt:"<strong>Quattro Canti & Fontana Pretoria</strong> — baroque heart & the 'Fountain of Shame'. ~30 min."},
+    {time:"11:00am",txt:"<strong>Palermo Cathedral</strong> — 900 years of layered architecture; rooftop terrace views. ~1 hr."},
+    {time:"12:00pm",txt:"<strong>Mercato Ballarò</strong> — ancient street market. Wander for blood-orange juice, arancini, panelle."},
+    {time:"1:00pm",dot:"ok",txt:"Lunch at <strong>Moltivolti</strong> — confirmed for 8 (ID 0362-4B81-C9BE-7083)."},
+    {time:"3:00pm",txt:"Back to Villa Minerva. Pool afternoon."},
+    {time:"7:00pm",dot:"pd",txt:"Dinner at <strong>Quattro Mani</strong> — confirm for 8."}
+  ],
+  blocks2:[{type:"resto",h:"🍽️ Ristorante Quattro Mani",badge:"pd",bd:"Via Francesco Riso 3, Palermo · Rated 4.6 · seafood, truffle ravioli, citrus swordfish, lemon granita.",call:"+39 091 616 5046",map:"Ristorante Quattro Mani Palermo",web:"quattromaniristorante.it"}]},
+4:{theme:"minerva",date:"Mon Jun 22",dl:"Day 4",iso:"2026-06-22",title:"Cefalù Day Trip",sub:"Norman cathedral · sandy beach · seafront lunch",mini:["culture:UNESCO","beach:Beach","dining:Dinner"],
+  tl:[
+    {time:"9:30am",txt:"Drive ~1 hr to Cefalù. Park along the Lungomare seafront (free)."},
+    {time:"10:30am",dot:"hi",txt:"<strong>Duomo di Cefalù</strong> — UNESCO Norman cathedral, Christ Pantocrator mosaic, twin towers against La Rocca. Opens 8:30am. ~45 min."},
+    {time:"11:15am",txt:"Medieval lanes; almond granita & brioche; pick up pastries; down to the beach."},
+    {time:"12:00pm",dot:"beach",txt:"<strong>Cefalù Beach</strong> — wide sand, calm water, La Rocca backdrop. ~45 min swim."},
+    {time:"1:00pm",dot:"pd",txt:"Lunch at <strong>SeaView Restaurant</strong> — pending TheFork confirmation, 8 at 1pm."},
+    {time:"2:30pm",txt:"Browse the corso — ceramics & lemon products. Drive back (~1 hr)."},
+    {time:"7:30pm",dot:"pd",txt:"Dinner at <strong>Il Cambusone</strong>, Palermo — confirm for 8."}
+  ],
+  blocks2:[{type:"resto",h:"🍽️ Il Cambusone",badge:"pd",bd:"Piazza Sant'Andrea 4, Palermo · Rated 4.7 · lobster ravioli, squid-ink pasta, grilled octopus, mussels.",call:"+39 091 683 2099",map:"Il Cambusone Palermo",web:"ristoranteilcambusone.it"}]},
+5:{theme:"minerva",date:"Tue Jun 23",dl:"Day 5",iso:"2026-06-23",title:"Castellammare del Golfo",sub:"Guidaloca beach · Arab-Norman castle · Zingaro",mini:["beach:Beach","culture:Castle","dining:Split Dinner"],
+  tl:[
+    {time:"9:15am",txt:"Depart Villa Minerva. ~25 min via SS187 coastal road. 2 cars."},
+    {time:"9:45am",dot:"hi",txt:"<strong>Guidaloca Beach</strong> — crystal water, pebble beach. Free access. Lido Vida Loca sunbeds optional (~€15–20pp)."},
+    {time:"12:30pm",txt:"Drive ~15 min into Castellammare town."},
+    {time:"1:00pm",dot:"ok",txt:"Lunch at <strong>H 80 Fame</strong> — confirmed for 8 at 1pm. Best seafood in town."},
+    {time:"2:30pm",txt:"Optional: Marina & Castello Arabo-Normanno (Tue 10–1 & 3–7)."},
+    {time:"3:00pm",dot:"hi",txt:"⏱️ If time allows — <strong>Riserva dello Zingaro</strong>: 15 min to Scopello entrance, hike ~2km to Cala Bue Marino cove. €5pp, allow 1.5–2 hrs. Bring water & wet-friendly shoes. Closes at sunset."},
+    {time:"5:30pm",txt:"Back to villa, pool & freshen up."}
+  ],
+  blocks:[
+    {type:"split",h:"🔀 Alt for Mary Jo & Bev",bd:"Monreale Cathedral instead (~20 min) — 12th-c. gold Byzantine mosaics (6,000m²), open 9–5:30. Rejoin for H 80 Fame or dine independently."},
+    {type:"resto",h:"🌟 Jeff & Katie — Bye Bye Blues",badge:"ok",bd:"Michelin-starred · Via del Garofalo 23, Palermo · Reservation #683 · 7:30pm for 2. Cancellation €50pp within 2 days.",call:"+39 091 6841415",map:"Bye Bye Blues Mondello"},
+    {type:"resto",h:"🍽️ Rest of Group — Enosteria Sicula",badge:"ok",bd:"Via Torrearsa 3, Palermo · 6:30pm · confirmed.",map:"Enosteria Sicula Palermo"}
+  ]},
+6:{theme:"aljafar",date:"Wed Jun 24",dl:"Day 6",iso:"2026-06-24",title:"Segesta & Transfer",sub:"Greek temple · out of Minerva · into Al Jafar",mini:["culture:Greek","villa:Check-in","dining:Cook"],
+  blocks:[{type:"split",h:"🔀 Split morning",bd:"Group may divide — Segesta (archaeology) vs Monreale (mosaics). Both fit the 10am checkout / 4pm check-in."}],
+  tl:[
+    {time:"10:00am",txt:"Check out Minerva. <strong>Rich & Scott</strong> head to Agrigento (skip Segesta & lunch), rejoin in Trapani Jun 25. Remaining: Jeff, Katie, Jake, Julia, Mary Jo, Bev."},
+    {time:"10:45am",dot:"pd",txt:"<strong>Parco di Segesta</strong> — 5th-c. BC Doric temple + hilltop theatre. Shuttle up (€2.50). Allow 2–2.5 hrs. Book ahead coopculture.it (€16pp, 6 adults).",map:"Parco Archeologico di Segesta"},
+    {time:"1:15pm",dot:"pd",txt:"Lunch at <strong>La Locanda di Nonna Ciccia</strong>, Calatafimi — call to book for 4."},
+    {time:"2:30pm",txt:"Drive to Al Jafar (~40 min). Explore citrus groves if early."},
+    {time:"4:00pm",txt:"Check in <strong>Al Jafar</strong> — Contrada Castellaccio, Paceco. Castle villa, walled gardens, 18m pool.",map:"Al Jafar Paceco Trapani"},
+    {time:"8:00pm",dot:"hi",txt:"Private cook dinner (cook arrives 6pm)."}
+  ],
+  blocks2:[
+    {type:"menu",h:"Al Jafar — First Night",courses:[["Antipasto","Pantesca salad — cherry tomato, capers, basil, oregano, red onion, olives"],["Primo","Busiate with Trapanese pesto"],["Secondo","Risotto ai frutti di mare — seafood, white wine, cherry tomatoes, herbs"],["Dolce","Cassata Siciliana — ricotta, almond paste"]]},
+    {type:"alert",h:"⚠️ Cook menu",bd:"Submit to The Thinking Traveller by June 17 · £65/person · +44 (0)20 3603 4478."}
+  ]},
+7:{theme:"aljafar",date:"Thu Jun 25",dl:"Day 7",iso:"2026-06-25",title:"Trapani & Erice",sub:"Hilltop town · cable car · salt pans · group dinner",mini:["culture:Erice","beach:Salt Pans","dining:Group Dinner"],
+  tl:[
+    {time:"9:30am",txt:"Depart Al Jafar. ~15 min to Trapani; park near cable car."},
+    {time:"10:00am",txt:"<strong>Trapani-Erice Cable Car</strong> — €11 return, 10–15 min, views over salt pans. Walk-up, opens 9:30am Thu. Can close in high wind — SP3 drive as backup."},
+    {time:"10:15am",dot:"hi",txt:"<strong>Erice</strong> — preserved medieval hilltop town, Castello di Venere, limestone lanes, views to Tunisia."},
+    {time:"11:30am",txt:"🍋 Almond pastries & granita — Erice's famous export. Non-negotiable."},
+    {time:"12:30pm",txt:"Lunch — Plan A: Gusto Panino Gourmet (quick, A/C) · Plan B: Osteria di Venere if confirmed."},
+    {time:"2:00pm",txt:"Cable car back down."},
+    {time:"2:30pm",dot:"beach",txt:"<strong>Saline di Trapani</strong> — salt pans & windmills, scenic ~45 min coastal drive. Scott explores Trapani solo."},
+    {time:"3:30pm",txt:"Back to Al Jafar, pool."},
+    {time:"7:00pm",dot:"ok",txt:"Dinner at <strong>Locanda Botteghelle</strong> — confirmed for 8 (incl. Rich & Scott)."}
+  ],
+  blocks2:[{type:"resto",h:"🌟 Locanda Botteghelle Ristorante Enoteca",badge:"ok",bd:"Corso Vittorio Emanuele 154, Trapani · Rated 4.9 · courtyard garden, exceptional wine list · ~15 min from Al Jafar.",call:"+39 0923 569685",map:"Locanda Botteghelle Trapani"}]},
+8:{theme:"aljafar",date:"Fri Jun 26",dl:"Day 8",iso:"2026-06-26",title:"Favignana — Egadi Islands",sub:"Hydrofoil · tuk tuks · crystal coves · island seafood",mini:["beach:Island","travel:Hydrofoil","dining:Lunch"],
+  blocks:[{type:"alert",h:"✅ Hydrofoil booked",bd:"Liberty Lines e-tickets confirmed for all 8. Save tickets to your phone before departure day."}],
+  tl:[
+    {time:"9:00am",txt:"Depart Al Jafar. ~15 min to Trapani port; park near Liberty Lines, Via Ammiraglio Staiti 55–61."},
+    {time:"9:30am",txt:"<strong>Hydrofoil Trapani → Favignana</strong> — 30 min crossing."},
+    {time:"10:00am",txt:"Arrive Favignana. Hire 2 Ape tuk tuks at the port — agree fare before each ride."},
+    {time:"10:15am",dot:"hi",txt:"<strong>Cala Azzurra</strong> — the island's finest sandy beach, turquoise & calm, great for kids. Arrive early; no service, bring water/snacks."},
+    {time:"12:15pm",txt:"Tuk tuk back; photo stop at <strong>Cala Rossa</strong> — dramatic rocky cove (better photo than swim for this group)."},
+    {time:"1:00pm",dot:"pd",txt:"Lunch at <strong>Ammàri Racconti e Cucina di Mare</strong> — pending confirmation, 8 at 1pm. Creative seafood, 4.6."},
+    {time:"2:30pm",txt:"Explore town, gelato, tuna shops; back to port."},
+    {time:"4:30pm",txt:"Hydrofoil Favignana → Trapani."},
+    {time:"7:00pm",dot:"ok",txt:"Dinner at <strong>Bromu</strong>, Trapani — confirmed for 8."}
+  ],
+  blocks2:[{type:"resto",h:"🌟 Bromu Restaurant",badge:"ok",bd:"Viale Regina Elena 10, Trapani · Rated 4.8 · husband & wife run, exceptional seafood, lovely outdoor seating · ~15 min from Al Jafar.",call:"+39 375 654 6077",map:"Bromu Restaurant Trapani"}]},
+9:{theme:"aljafar",date:"Sat Jun 27",dl:"Day 9",iso:"2026-06-27",title:"Selinunte or Villa Day",sub:"Group choice · farewell dinner on the salt pans",mini:["culture:Optional","villa:Villa Day","dining:Farewell"],
+  blocks:[{type:"decision",h:"🔀 Group choice morning",bd:"<strong>A</strong> — Selinunte Archaeological Park (~45 min, one of Europe's largest Greek parks, electric cart €17pp, opens 9am). <strong>B</strong> — Al Jafar villa day: pool, gardens, kids' play area. Also nearby: Marsala wine tasting · Mozia Phoenician island boat · Zingaro (hardy walkers)."}],
+  tl:[{time:"Evening",dot:"ok",txt:"Farewell dinner at <strong>Mamma Caura</strong> on the salt pans — the perfect Al Jafar sendoff."}],
+  blocks2:[{type:"resto",h:"🌅 Mamma Caura — Salt Pans Dinner",badge:"ok",bd:"Contrada Ettore Infersa, Marsala · Booking #340862108 · Sat Jun 27, 8:00pm · 6 adults + 2 kids (1 lactose-intolerant noted). Bring a windbreaker, arrive on time (timed seating), save tickets to wallet · ~20 min from Al Jafar.",map:"Mamma Caura Marsala salt pans"}]},
+10:{theme:"rome",date:"Sun Jun 28",dl:"Day 10",iso:"2026-06-28",title:"Palermo → Rome",sub:"Return cars · fly to Rome · Via Veneto",mini:["travel:Transfer","dining:Arrival Dinner"],
+  tl:[
+    {time:"9:30am",txt:"Check out Al Jafar."},
+    {time:"10:30am",txt:"Arrive Palermo (PMO). Europcar drop-off 12:00pm (#1198342651 & #1198342794)."},
+    {time:"12:15pm",txt:"<strong>ITA AZ1784</strong> PMO → FCO · arrives 1:15pm."},
+    {time:"2:30pm",txt:"Taxi/transfer to <strong>Roma Prestigious Apartment</strong>, Via Veneto.",map:"Via Veneto Rome"},
+    {time:"Afternoon",txt:"Freshen up · stroll Via Veneto · Trevi Fountain (10 min walk) · aperitivo."},
+    {time:"Evening",dot:"pd",txt:"Dinner at <strong>Osteria Barberini</strong> (5 min walk) — book for 7. Truffle pasta, Roman classics, homemade limoncello."}
+  ],
+  blocks2:[{type:"resto",h:"🍽️ Osteria Barberini",badge:"pd",bd:"Near Piazza Barberini · book when reservation window opens, party of 7.",web:"osteriabarberini.it",map:"Osteria Barberini Rome"}]},
+11:{theme:"rome",date:"Mon Jun 29",dl:"Day 11",iso:"2026-06-29",title:"Ancient Rome",sub:"Colosseum · Forum · Palatine · Trastevere dinner",mini:["culture:Ancient Rome","dining:Trastevere"],
+  tl:[
+    {time:"9:00am",dot:"ok",txt:"<strong>Colosseum, Forum & Palatine</strong> — guided tour confirmed, 3 hrs, 5 adults + 2 kids ($483.46, Viator). Comfortable shoes & water — June heat is real."},
+    {time:"12:00pm",txt:"Tour ends. Lunch near the Forum or Testaccio."},
+    {time:"Afternoon",txt:"Capitoline Hill → Circus Maximus → Bocca della Verità → wander into Trastevere."},
+    {time:"7:30pm",dot:"pd",txt:"Dinner at <strong>Tonnarello Scala</strong>, Trastevere — book for 7."}
+  ],
+  blocks2:[{type:"resto",h:"🍽️ Tonnarello Scala",badge:"pd",bd:"Piazza della Scala 19/21, Trastevere · Rated 4.8 (18,000+ reviews) · best Roman pasta — carbonara, amatriciana, lasagna, oxtail. Lively & authentic.",call:"+39 327 091 3317",map:"Tonnarello Scala Trastevere",web:"tonnarello.it"}]},
+12:{theme:"rome",date:"Tue Jun 30",dl:"Day 12",iso:"2026-06-30",title:"Last Day in Rome",sub:"Group splits · castles, cathedrals & gelato",mini:["culture:Split Day","dining:Farewell"],
+  blocks:[{type:"split",h:"👨‍👩‍👧‍👦 Jeff, Katie, Jake & Julia",bd:"<strong>Castel Sant'Angelo</strong> — fortress, cannons, dungeons, rooftop (kids love it; ticketone.it €18/~€2 kids). <strong>Campo de' Fiori</strong> market → lunch. <strong>Pantheon</strong> timed entry (pantheonroma.com €5pp). <strong>Piazza Navona → Villa Borghese</strong> (bikes/pedal boats). <strong>Come il Latte</strong> gelato (4.7, 5 min from apartment)."}],
+  blocks_b:[{type:"split",h:"Mary Jo & Bev",bd:"<strong>Vatican Museums, Sistine Chapel & St. Peter's</strong> — skip-the-line guided tour ✅ · 08:15 English · Viator #1736906741 · meet Via Germanico 8. Afternoon: Piazza Navona (15 min walk)."}],
+  blocks2:[{type:"resto",h:"🍽️ Fraschetteria — Farewell for 5",badge:"pd",bd:"Jeff, Katie, Jake, Julia, Rich · Via dei Cappuccini 29 · 5 min walk · tiny 18-seat — book the moment it opens. Tagliatelle al tartufo, pistachio tiramisu · 4.6.",call:"+39 06 6941 2861",map:"Fraschetteria Via dei Cappuccini Rome"}]},
+13:{theme:"rome",date:"Wed Jul 1",dl:"Day 13",iso:"2026-07-01",title:"Departures",sub:"Rome → Boston · Mary Jo & Bev train to Florence",mini:["travel:Departure","culture:Florence Ext."],
+  blocks:[
+    {type:"flight",route:"Jeff, Katie, Jake, Julia · FCO → BOS",detail:"ITA AZ614 · 10:25am → 1:40pm"},
+    {type:"flight",route:"Rich · FCO → EWR",detail:"Separate booking · Jul 1"},
+    {type:"flight",route:"Mary Jo & Bev · Rome → Florence",detail:"Trenitalia/Italo · ~1.5 hrs · book ahead · check in Sina Villa Medici"}
+  ],
+  blocks_b:[{type:"split",h:"Mary Jo & Bev — Florence afternoon",bd:"<strong>Ponte Vecchio</strong> (best in afternoon light) · <strong>Piazza della Signoria</strong> (open-air sculpture) · <strong>Duomo</strong> exterior (inside tour is Jul 2) · <strong>Piazzale Michelangelo</strong> at sunset — the only evening for it."}]},
+14:{theme:"florence",date:"Thu Jul 2",dl:"Day 14",iso:"2026-07-02",title:"Florence — Uffizi & Accademia",sub:"Booked tour · Michelangelo's David · early night",mini:["culture:Renaissance","travel:Early Prep"],
+  tl:[
+    {time:"10:15am",dot:"ok",txt:"<strong>Uffizi & Accademia</strong> timed entry + small-group Duomo walking tour ✅ · Viator #1698207435 · Via Guelfa 2 · save mobile ticket."},
+    {time:"Afternoon",txt:"Free — Oltrarno neighbourhood, gelato, rest at the hotel."},
+    {time:"7:00pm",dot:"hi",txt:"Early dinner near hotel. Arrange ~4:30am airport taxi with Sina Villa Medici concierge tonight."},
+    {time:"9:00pm",txt:"Early night — 4:30am pickup tomorrow."}
+  ]},
+15:{theme:"florence",date:"Fri Jul 3",dl:"Day 15",iso:"2026-07-03",title:"Florence → Rome → Boston",sub:"Ultra-early departure home",mini:["travel:Fly Home"],
+  tl:[
+    {time:"4:30am",dot:"hi",txt:"Pre-arranged taxi to Florence Airport (FLR) — allow 30 min. Book via concierge the night before."}
+  ],
+  blocks:[
+    {type:"flight",route:"FLR → FCO",detail:"ITA AZ1676 · 6:25am → 7:15am"},
+    {type:"flight",route:"FCO → BOS",detail:"ITA AZ614 · 10:25am → 1:40pm (Boston)"}
+  ]}
+};
+
+/* ============ VILLAS ============ */
+const VILLAS={
+  minerva:{name:"Villa Minerva",loc:"Mondello, Palermo · Jun 20–24",
+    rows:[
+      {lab:"📶 WiFi",copy:[["Network","Orbilugano"],["Password","beatrice"]]},
+      {lab:"📍 GPS & Timing",gps:"38.189054,13.328553",kv:[["GPS","38.189054, 13.328553"],["Check-in","From 4:00 pm"],["Check-out","By 10:00 am"]]},
+      {lab:"🏊 Pool",kv:[["Size","12 m × 3 m"],["Depth","1.3 m throughout"]]},
+      {lab:"🏠 Housekeeping",kv:[["Daily service","Mon–Sat · 3 hrs/day"]]},
+      {lab:"✨ Extras",tags:["Sonos speakers","Sky TV (Movies & Sport)","2 bicycles"],warn:"Tap water NOT drinkable"}
+    ]},
+  aljafar:{name:"Al Jafar",loc:"Paceco, Trapani · Jun 24–28",
+    rows:[
+      {lab:"📶 WiFi",copy:[["Password","aljafar2021"]],note:"All lowercase · works throughout"},
+      {lab:"📍 GPS & Timing",gps:"37.962846,12.564952",kv:[["GPS","37.962846, 12.564952"],["Check-in","From 4:00 pm"],["Check-out","By 10:00 am"]]},
+      {lab:"🏊 Pools",kv:[["Main","18 m × 4 m · 1.0–2.6 m"],["Children's","6 m × 2.3 m · 60 cm (across road)"]]},
+      {lab:"👨‍👩 Staff & Breakfast",kv:[["Caretakers","Mommo & Nadia (limited English)"],["Backup","Sister Lidia"],["Hours","Mon–Sat 9am–12pm"]]},
+      {lab:"☕ Breakfast — Included",plain:"Bread · croissants · pastries · yoghurt · juices · cheese · ham · coffee · tea · jams"},
+      {lab:"✨ Extras",tags:["Library","Kids' play area (across road)"],ok:"Tap water drinkable (filtered)"}
+    ]}
+};
+const TTT="+44 (0)20 3603 4478";
+
+/* ============ CHECKLIST ============ */
+const CHECKLIST=[
+  {g:"urgent",label:"🔴 Immediate / Urgent",items:[
+    {id:"c1",t:"Liberty Lines Hydrofoil — Favignana",d:"✅ BOOKED · Jun 26 · 8 guests · save to phone",done:true},
+    {id:"c2",t:"Castel Sant'Angelo tickets",d:"2 adults + 2 kids · Jun 30 · €18/~€2",book:"ticketone.it"},
+    {id:"c3",t:"Pantheon timed entry",d:"2 adults + 2 kids · Jun 30 · €5pp",book:"pantheonroma.com"},
+    {id:"c4",t:"Segesta tickets",d:"6 adults · Jun 24 · €16pp",book:"coopculture.it"},
+    {id:"c5",t:"Confirm SeaView, Cefalù",d:"TheFork pending · Jun 22 · 8 · 1pm"},
+    {id:"c6",t:"Confirm Ammàri, Favignana",d:"TheFork pending · Jun 26 · 8 · 1pm"},
+    {id:"c7",t:"Lido Vida Loca — sunbeds",d:"Guidaloca · Jun 23",call:"+39 338 742 0063"},
+    {id:"c8",t:"La Locanda di Nonna Ciccia — lunch",d:"4 people · Jun 24 (Rich & Scott to Agrigento)",call:"+39 0924 527370"}
+  ]},
+  {g:"week",label:"🟡 This Week",items:[
+    {id:"c9",t:"Fraschetteria — farewell for 5",d:"Jun 30 · book when it opens · Via dei Cappuccini 29",call:"+39 06 6941 2861"},
+    {id:"c10",t:"Osteria Barberini for 7",d:"Jun 28 arrival night · book when window opens",book:"osteriabarberini.it"},
+    {id:"c11",t:"Submit Al Jafar cook menu",d:"By Jun 17 · menu selected ✅ · TTT",call:TTT},
+    {id:"c12",t:"Tonnarello Scala for 7",d:"Jun 29 · Trastevere · TheFork",book:"tonnarello.it"}
+  ]},
+  {g:"confirm",label:"🔵 Still to Confirm",items:[
+    {id:"c13",t:"Il Cambusone for 8",d:"Jun 22 · Palermo",call:"+39 091 683 2099"},
+    {id:"c14",t:"Quattro Mani for 8",d:"Jun 21 · Palermo",call:"+39 091 616 5046"},
+    {id:"c15",t:"Osteria di Venere, Erice",d:"Jun 25 lunch backup · awaiting WhatsApp",call:"+39 0923 869362"},
+    {id:"c16",t:"MJ & Bev — Vatican tour",d:"✅ CONFIRMED · Viator #1736906741 · Jun 30 08:15 · $319.50",done:true},
+    {id:"c17",t:"MJ & Bev — train Rome→Florence",d:"Jul 1 · Trenitalia/Italo · book ahead"},
+    {id:"c18",t:"MJ & Bev — Florence hotel",d:"✅ Sina Villa Medici · Jul 1–3 · taxi still to book",done:true},
+    {id:"c19",t:"MJ & Bev — airport taxi FLR",d:"Jul 2 night · for 6:25am Jul 3 · via concierge"},
+    {id:"c20",t:"MJ & Bev — Uffizi & Accademia",d:"✅ CONFIRMED · Viator #1698207435 · Jul 2 10:15 · $305.60",done:true}
+  ]}
+];
+
+/* ============ render trip rail ============ */
+function tagHTML(m){const[c,l]=m.split(':');return `<span class="mtag ${c}">${l}</span>`;}
+const TODAY="2026-06-19"; // demo anchor; real device date used in goToday via fallback
+
+function renderRail(){
+  const todayISO=realTodayInTrip();
+  let html='';
+  PHASES.forEach(p=>{
+    html+=`<div class="phase"><div class="phase-h"><span class="pn">${p.n}</span><div><div class="pt">${p.t}</div><div class="pd">${p.d}</div></div></div><div class="daylist">`;
+    p.days.forEach(dn=>{
+      const d=DAYS[dn];const today=d.iso===todayISO;
+      html+=`<div class="daycard t-${d.theme} ${today?'istoday':''}" onclick="openDay(${dn})">
+        <div class="num"><div class="d">${dn}</div><div class="dl">Day</div><div class="dt">${d.date.split(' ').slice(1).join(' ')}</div></div>
+        <div class="body">${today?'<span class="todaybadge">Today</span><br>':''}<h3>${d.title}</h3><div class="s">${d.sub}</div>
+        <div class="mini">${d.mini.map(tagHTML).join('')}</div></div></div>`;
+    });
+    html+=`</div></div>`;
+  });
+  document.getElementById('phase-rail').innerHTML=html;
+}
+
+/* ============ day detail ============ */
+function blockHTML(b){
+  if(b.type==='flight') return `<div class="block flight"><div class="flightrow"><span class="rt">${b.route}</span><span class="fd">${b.detail}</span></div></div>`;
+  if(b.type==='menu') return `<div class="block menu"><div class="bh">🍴 ${b.h}</div>${b.courses.map(c=>`<div class="menucourse"><span class="lab">${c[0]}</span><span>${c[1]}</span></div>`).join('')}</div>`;
+  if(b.type==='alert') return `<div class="block alert"><div class="bh" style="color:inherit">${b.h}</div><div class="bd">${b.bd}</div></div>`;
+  if(b.type==='split') return `<div class="block split"><div class="bh">${b.h}</div><div class="bd">${b.bd}</div></div>`;
+  if(b.type==='decision') return `<div class="block decision"><div class="bh" style="color:var(--terra-deep)">${b.h}</div><div class="bd">${b.bd}</div></div>`;
+  if(b.type==='resto'){
+    let acts='';
+    if(b.call) acts+=tel(b.call);
+    if(b.map) acts+=mapBtn(b.map);
+    if(b.web) acts+=webBtn(b.web,'Site');
+    let badge=b.badge==='ok'?'<span class="badge ok">✓ Confirmed</span>':b.badge==='pd'?'<span class="badge pd">◷ To confirm</span>':'';
+    return `<div class="block resto"><div class="bh">${b.h} ${badge}</div><div class="bd">${b.bd}</div>${acts?`<div class="actions">${acts}</div>`:''}</div>`;
+  }
+  return '';
+}
+function tlHTML(t){
+  const dot=t.dot==='hi'?'hi':t.dot==='ok'?'ok':t.dot==='pd'?'pd':t.dot==='beach'?'hi':'';
+  const mapb=t.map?`<div class="actions">${mapBtn(t.map)}</div>`:'';
+  return `<div class="tl"><div class="dot ${dot}"></div><div class="c"><div class="time">${t.time}</div><div class="txt">${t.txt}</div>${mapb}</div></div>`;
+}
+
+let currentDay=1;
+function openDay(n){
+  currentDay=n;const d=DAYS[n];
+  let html=`<div class="t-${d.theme} detail-hd"><div class="inner">
+    <div class="backrow">
+      <button class="back" onclick="setView('trip',document.querySelector('nav.tabs button[data-v=trip]'))">‹ Itinerary</button>
+      <div class="daynav"><button onclick="openDay(${n-1})" ${n<=1?'disabled':''}>‹</button><button onclick="openDay(${n+1})" ${n>=15?'disabled':''}>›</button></div>
+    </div>
+    <div class="meta">${d.dl} · ${d.date}</div>
+    <h2>${d.title}</h2><div class="ds">${d.sub}</div>
+  </div></div>`;
+  if(d.blocks) html+=d.blocks.map(blockHTML).join('');
+  if(d.tl) html+=`<div class="timeline">${d.tl.map(tlHTML).join('')}</div>`;
+  if(d.blocks_b) html+=d.blocks_b.map(blockHTML).join('');
+  if(d.blocks2) html+=d.blocks2.map(blockHTML).join('');
+  html+=`<footer><div class="ft">Day ${n} of 15</div></footer>`;
+  document.getElementById('v-day').innerHTML=html;
+  setView('day',null);
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+/* ============ villa render ============ */
+let villaKey='minerva';
+function renderVilla(){
+  const v=VILLAS[villaKey];
+  let html=`<div class="vcard">`;
+  v.rows.forEach(r=>{
+    html+=`<div class="vrow"><div class="vlab">${r.lab}</div>`;
+    if(r.copy) r.copy.forEach(c=>{html+=`<div class="copyrow" onclick="copyText('${c[1]}',this)"><span class="k" style="color:var(--soft);font-size:13px">${c[0]}</span><span class="v">${c[1]}</span></div>`;});
+    if(r.note) html+=`<div style="font-size:11px;color:var(--soft);margin-top:6px">${r.note}</div>`;
+    if(r.kv) r.kv.forEach(k=>{html+=`<div class="kv"><span class="k">${k[0]}</span><span class="v">${k[1]}</span></div>`;});
+    if(r.gps) html+=`<div class="actions" style="margin-top:9px">${mapBtn(r.gps.replace(',',' '))}</div>`;
+    if(r.plain) html+=`<div style="font-size:13px;color:var(--soft);line-height:1.5">${r.plain}</div>`;
+    if(r.tags) html+=`<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">${r.tags.map(t=>`<span class="mtag villa">${t}</span>`).join('')}</div>`;
+    if(r.warn) html+=`<div style="margin-top:8px;font-size:13px"><span class="notdrink">⚠️ ${r.warn}</span></div>`;
+    if(r.ok) html+=`<div style="margin-top:8px;font-size:13px"><span class="drink">✓ ${r.ok}</span></div>`;
+    html+=`</div>`;
+  });
+  html+=`</div>
+  <div class="vcontact"><div class="l">The Thinking Traveller — Villa Contact</div><div class="d">Any villa issue or emergency during your stay</div><div class="actions">${tel(TTT)}</div></div>`;
+  document.getElementById('villa-content').innerHTML=html;
+}
+function setVilla(k){villaKey=k;document.getElementById('vb-minerva').classList.toggle('active',k==='minerva');document.getElementById('vb-aljafar').classList.toggle('active',k==='aljafar');renderVilla();}
+
+/* ============ checklist render + persistence ============ */
+let checked={};
+try{checked=JSON.parse(localStorage.getItem('miller_check')||'{}');}catch(e){checked={};}
+function saveCheck(){try{localStorage.setItem('miller_check',JSON.stringify(checked));}catch(e){}}
+function renderList(){
+  let total=0,done=0,html='';
+  CHECKLIST.forEach(grp=>{
+    html+=`<div class="clgroup ${grp.g}"><div class="gh">${grp.label}</div>`;
+    grp.items.forEach(it=>{
+      total++;
+      const isDone = (it.id in checked)? checked[it.id] : !!it.done;
+      if(isDone) done++;
+      let acts='';
+      if(it.call) acts+=tel(it.call);
+      if(it.book) acts+=bookBtn(it.book);
+      html+=`<div class="cl ${grp.g==='urgent'?'urgentbar':''} ${isDone?'done':''}" id="cl-${it.id}" onclick="toggleCheck('${it.id}',${!!it.done})">
+        <div class="box">${isDone?'✓':''}</div>
+        <div class="ct"><div class="ctt">${it.t}</div><div class="cd">${it.d}</div>${acts?`<div class="cact" onclick="event.stopPropagation()">${acts}</div>`:''}</div></div>`;
+    });
+    html+=`</div>`;
+  });
+  document.getElementById('checklist').innerHTML=html;
+  const pct=Math.round(done/total*100);
+  document.getElementById('prog-bar').style.width=pct+'%';
+  document.getElementById('prog-lab').textContent=`${done} of ${total} done · ${pct}%`;
+}
+function toggleCheck(id,def){
+  const cur = (id in checked)? checked[id] : def;
+  checked[id]=!cur; saveCheck(); renderList();
+}
+
+/* ============ utils ============ */
+function copyText(t,el){
+  if(navigator.clipboard) navigator.clipboard.writeText(t);
+  const v=el.querySelector('.v');const o=v.textContent;v.innerHTML=o+' <span class="copyhint">copied ✓</span>';
+  setTimeout(()=>v.textContent=o,1100);
+}
+function realTodayInTrip(){
+  const t=new Date();const iso=t.toISOString().slice(0,10);
+  if(DAYS[1] && iso>=DAYS[1].iso && iso<=DAYS[15].iso) return iso;
+  return null;
+}
+function goToday(){
+  const iso=realTodayInTrip();
+  let dn=null;
+  for(const k in DAYS){if(DAYS[k].iso===iso){dn=+k;break;}}
+  if(dn){openDay(dn);}
+  else{
+    // before/after trip → go to itinerary, scroll to first day
+    setView('trip',document.querySelector('nav.tabs button[data-v=trip]'));
+    window.scrollTo({top:0,behavior:'smooth'});
+    const first=document.querySelector('.daycard');
+    if(first){first.style.transition='box-shadow .4s';first.style.boxShadow='0 0 0 3px var(--terra)';setTimeout(()=>first.style.boxShadow='',1400);}
+  }
+}
+function setView(v,btn){
+  document.querySelectorAll('.view').forEach(s=>s.classList.remove('active'));
+  document.getElementById('v-'+v).classList.add('active');
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  if(v==='day'){document.querySelector('nav.tabs button[data-v=trip]').classList.add('active');}
+  else if(btn) btn.classList.add('active');
+  else document.querySelector(`nav.tabs button[data-v=${v}]`)?.classList.add('active');
+  if(v!=='day') window.scrollTo({top:0,behavior:'instant'});
+}
+
+renderRail();renderVilla();renderList();
+</script>
+</body>
+</html>
