@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1a2238">
+<title>Sicily Villa Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a2238;
+  --ink-soft:#3a4361;
+  --paper:#f4ede1;
+  --paper-2:#ece2d2;
+  --card:#fbf7ef;
+  --terra:#c5683f;
+  --terra-deep:#a8502d;
+  --ochre:#cf9b4e;
+  --sea:#2f7d8c;
+  --line:rgba(26,34,56,.12);
+  --line-strong:rgba(26,34,56,.22);
+  --shadow:0 1px 2px rgba(26,34,56,.06),0 8px 24px rgba(26,34,56,.08);
+  --maxw:560px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Hanken Grotesk',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:88px;
+  background-image:radial-gradient(circle at 20% 0%,rgba(207,155,78,.10),transparent 40%),radial-gradient(circle at 90% 10%,rgba(47,125,140,.08),transparent 45%);
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 18px;}
+
+/* ---- Header / villa switch ---- */
+header{
+  position:sticky;top:0;z-index:40;
+  background:var(--ink);
+  color:var(--paper);
+  padding:calc(env(safe-area-inset-top) + 14px) 0 0;
+  box-shadow:0 6px 20px rgba(26,34,56,.18);
+}
+.brand{
+  font-family:'Hanken Grotesk',sans-serif;
+  font-size:10px;letter-spacing:.32em;text-transform:uppercase;
+  opacity:.6;text-align:center;margin-bottom:10px;
+}
+.switch{
+  display:flex;gap:6px;background:rgba(255,255,255,.07);
+  border-radius:999px;padding:5px;margin:0 18px;
+}
+.switch button{
+  flex:1;border:0;background:transparent;color:rgba(244,237,225,.55);
+  font-family:'Fraunces',serif;font-size:18px;font-weight:500;
+  padding:9px 4px;border-radius:999px;cursor:pointer;
+  transition:all .35s cubic-bezier(.4,0,.2,1);letter-spacing:.01em;
+}
+.switch button.active{background:var(--terra);color:#fff;box-shadow:0 3px 10px rgba(168,80,45,.45);}
+.locale{
+  text-align:center;font-size:11.5px;letter-spacing:.05em;
+  padding:9px 0 13px;opacity:.7;
+}
+.locale span{color:var(--ochre);}
+
+/* ---- Search ---- */
+.searchbar{margin:16px 0 4px;position:relative;}
+.searchbar input{
+  width:100%;border:1px solid var(--line-strong);background:var(--card);
+  border-radius:14px;padding:13px 14px 13px 40px;font-size:15px;font-family:inherit;
+  color:var(--ink);box-shadow:var(--shadow);
+}
+.searchbar input:focus{outline:none;border-color:var(--terra);}
+.searchbar svg{position:absolute;left:13px;top:13px;opacity:.4;}
+.search-results{margin-top:10px;}
+.no-res{padding:20px;text-align:center;color:var(--ink-soft);font-size:14px;}
+
+/* ---- Quick essentials ---- */
+.essentials{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 6px;}
+.ess{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:14px;box-shadow:var(--shadow);text-decoration:none;color:var(--ink);
+  display:block;transition:transform .15s;
+}
+.ess:active{transform:scale(.97);}
+.ess .lab{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--terra-deep);font-weight:600;}
+.ess .val{font-family:'Fraunces',serif;font-size:19px;margin-top:3px;font-weight:500;word-break:break-word;}
+.ess .sub{font-size:12px;color:var(--ink-soft);margin-top:1px;}
+.ess.wide{grid-column:1/3;}
+.ess.dark{background:var(--ink);color:var(--paper);border-color:transparent;}
+.ess.dark .lab{color:var(--ochre);}
+.ess.terra{background:var(--terra);color:#fff;border-color:transparent;}
+.ess.terra .lab{color:rgba(255,255,255,.8);}
+
+/* ---- Section nav (chips) ---- */
+.section-title{
+  font-family:'Fraunces',serif;font-size:13px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--ink-soft);margin:26px 2px 12px;font-weight:600;
+  display:flex;align-items:center;gap:9px;
+}
+.section-title::before{content:"";width:18px;height:1px;background:var(--terra);}
+
+.cards{display:flex;flex-direction:column;gap:11px;}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  overflow:hidden;box-shadow:var(--shadow);
+}
+.card-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:15px 16px;cursor:pointer;user-select:none;gap:12px;
+}
+.card-head h3{
+  margin:0;font-family:'Fraunces',serif;font-size:18px;font-weight:500;line-height:1.2;
+  display:flex;align-items:center;gap:10px;
+}
+.card-head .ico{font-size:18px;line-height:1;width:24px;text-align:center;}
+.chev{transition:transform .3s;flex-shrink:0;opacity:.45;}
+.card.open .chev{transform:rotate(180deg);}
+.card-body{
+  max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);
+}
+.card.open .card-body{max-height:6000px;}
+.card-inner{padding:0 16px 16px;border-top:1px solid var(--line);padding-top:14px;font-size:14.5px;color:var(--ink-soft);}
+.card-inner p{margin:0 0 11px;}
+.card-inner p:last-child{margin-bottom:0;}
+.card-inner strong{color:var(--ink);font-weight:600;}
+.card-inner .em{color:var(--terra-deep);font-weight:600;}
+
+.kv{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:14px;}
+.kv:last-child{border-bottom:0;}
+.kv .k{color:var(--ink-soft);}
+.kv .v{color:var(--ink);font-weight:600;text-align:right;}
+
+.tag{display:inline-block;background:var(--paper-2);border:1px solid var(--line);border-radius:8px;padding:2px 9px;font-size:11.5px;font-weight:600;color:var(--ink-soft);margin:0 4px 4px 0;}
+.tag.price{color:var(--terra-deep);}
+
+a.tel,a.maplink{color:var(--sea);text-decoration:none;font-weight:600;border-bottom:1px solid rgba(47,125,140,.3);}
+a.tel:active,a.maplink:active{opacity:.6;}
+
+.place{padding:11px 0;border-bottom:1px solid var(--line);}
+.place:last-child{border-bottom:0;}
+.place .pn{font-family:'Fraunces',serif;font-size:15.5px;color:var(--ink);font-weight:500;}
+.place .pd{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+.place .pmeta{margin-top:5px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+
+.note{background:rgba(207,155,78,.13);border-left:3px solid var(--ochre);padding:11px 13px;border-radius:0 10px 10px 0;font-size:13.5px;color:var(--ink-soft);margin:2px 0 12px;}
+.note.warn{background:rgba(197,104,63,.12);border-color:var(--terra);}
+.note strong{color:var(--ink);}
+
+ol.steps{margin:0;padding-left:20px;}
+ol.steps li{margin-bottom:9px;padding-left:3px;}
+
+/* ---- Bottom tab bar ---- */
+nav.tabs{
+  position:fixed;bottom:0;left:0;right:0;z-index:50;
+  background:rgba(251,247,239,.92);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line-strong);
+  display:flex;justify-content:space-around;
+  padding:8px 6px calc(env(safe-area-inset-bottom) + 8px);
+  max-width:var(--maxw);margin:0 auto;
+}
+nav.tabs button{
+  background:none;border:0;font-family:inherit;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  color:var(--ink-soft);font-size:10px;font-weight:600;letter-spacing:.02em;
+  flex:1;padding:4px 0;transition:color .2s;
+}
+nav.tabs button .tico{font-size:19px;line-height:1;}
+nav.tabs button.active{color:var(--terra-deep);}
+nav.tabs button.active .tico{transform:translateY(-1px);}
+
+.view{display:none;animation:fade .35s ease;}
+.view.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+.pagehd{font-family:'Fraunces',serif;font-size:28px;font-weight:500;margin:22px 2px 4px;line-height:1.05;}
+.pagesub{font-size:13px;color:var(--ink-soft);margin:0 2px 4px;}
+
+footer{text-align:center;font-size:11px;color:var(--ink-soft);opacity:.7;padding:26px 0 10px;letter-spacing:.04em;}
+footer .tt{font-family:'Fraunces',serif;letter-spacing:.2em;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">The Thinking Traveller — Sicily</div>
+  <div class="switch">
+    <button id="btn-minerva" class="active" onclick="setVilla('minerva')">Minerva</button>
+    <button id="btn-aljafar" onclick="setVilla('aljafar')">Al Jafar</button>
+  </div>
+  <div class="locale" id="locale"></div>
+</header>
+
+<div class="wrap">
+
+  <!-- HOME -->
+  <section class="view active" id="view-home">
+    <div class="searchbar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg>
+      <input id="search" type="search" placeholder="Search wifi, pizza, fuse box, beach…" oninput="runSearch(this.value)" autocomplete="off">
+    </div>
+    <div id="search-wrap" class="search-results" style="display:none;"></div>
+
+    <div id="home-content">
+      <div class="essentials" id="essentials"></div>
+      <div class="section-title">Good to know</div>
+      <div class="cards" id="home-cards"></div>
+    </div>
+  </section>
+
+  <!-- HOUSE -->
+  <section class="view" id="view-house">
+    <h1 class="pagehd">The House</h1>
+    <p class="pagesub">Practical info, troubleshooting & service</p>
+    <div class="cards" id="house-cards"></div>
+  </section>
+
+  <!-- OUT -->
+  <section class="view" id="view-out">
+    <h1 class="pagehd" id="out-hd">Out & About</h1>
+    <p class="pagesub" id="out-sub"></p>
+    <div class="cards" id="out-cards"></div>
+  </section>
+
+  <!-- EAT -->
+  <section class="view" id="view-eat">
+    <h1 class="pagehd" id="eat-hd">Where to Eat</h1>
+    <p class="pagesub" id="eat-sub"></p>
+    <div class="cards" id="eat-cards"></div>
+  </section>
+
+  <!-- SOS -->
+  <section class="view" id="view-sos">
+    <h1 class="pagehd">Help & Safety</h1>
+    <p class="pagesub">Emergencies, support & the small print</p>
+    <div class="essentials" id="sos-numbers"></div>
+    <div class="cards" id="sos-cards"></div>
+  </section>
+
+  <footer>
+    <a href="index.html" style="display:inline-block;margin-bottom:16px;padding:11px 20px;background:var(--ink);color:var(--paper);border-radius:999px;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.02em;">‹ Back to the trip itinerary</a>
+    <div class="tt">T</div>
+    Your villa companion · keep it handy
+  </footer>
+</div>
+
+<nav class="tabs">
+  <button class="active" data-view="home" onclick="setView('home',this)"><span class="tico">✶</span>Essentials</button>
+  <button data-view="house" onclick="setView('house',this)"><span class="tico">⌂</span>House</button>
+  <button data-view="out" onclick="setView('out',this)"><span class="tico">⌖</span>Out</button>
+  <button data-view="eat" onclick="setView('eat',this)"><span class="tico">✦</span>Eat</button>
+  <button data-view="sos" onclick="setView('sos',this)"><span class="tico">✚</span>Help</button>
+</nav>
+
+<script>
+/* ============ helpers ============ */
+const tel = n => `<a class="tel" href="tel:${n.replace(/[^+\d]/g,'')}">${n}</a>`;
+const map = (q,label)=>`<a class="maplink" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}">${label||q}</a>`;
+const gps = (c)=>`https://www.google.com/maps/search/?api=1&query=${c}`;
+const price = p => `<span class="tag price">${p}</span>`;
+
+/* ============ shared data ============ */
+const SHARED = {
+  support: {
+    title:"Thinking Traveller local team",
+    body:`<p>The local team is on hand from 24h before arrival until you're home. Reach them by phone, SMS or email for delayed arrivals, finding the villa, power cuts, language help — anything unexpected.</p>
+    <div class="note warn"><strong>Night & early morning (18:00–10:00):</strong> for urgent matters <strong>call directly</strong> — texts and WhatsApp may not arrive immediately. Messages sent after 18:00 are answered the next morning.</div>
+    <p>Their first contact is usually a short intro SMS. No reply just means they assume all is well.</p>`
+  },
+  easypark:{
+    title:"EasyPark app",
+    body:`<p>Strongly recommended for on-street parking. Pay by the minute; start, extend or stop sessions from your phone. Needs roaming/data to work.</p>
+    <p><strong>Setup:</strong> register, add your <strong>licence plate</strong> & a card/PayPal. The app finds your zone by GPS or you enter the meter's area code.</p>
+    <div class="note"><strong>On the dashboard:</strong> display a slip of paper noting <strong>"EASYPARK"</strong>. Attendants check the plate — no physical ticket needed.</div>`
+  },
+  palermoZtl:{
+    title:"Palermo ZTL & parking",
+    body:`<p>Central Palermo is a <strong>ZTL (limited-traffic zone)</strong> — you need a pass or you'll be fined. Daily pass ~<strong>€5</strong> via the Comune di Palermo site, PalerMobilità app, or AMAT counters / tobacconists / newsagents. Activate on entry with your plate.</p>
+    <div class="kv"><span class="k">Daytime ZTL</span><span class="v">Mon–Fri 08:00–20:00</span></div>
+    <div class="kv"><span class="k">Night ZTL</span><span class="v">Fri/Sat/Sun late</span></div>
+    <div class="kv"><span class="k">Vehicle</span><span class="v">Euro 3 petrol / Euro 4 diesel+</span></div>
+    <p style="margin-top:12px"><strong>Park just outside the ZTL:</strong></p>
+    <div class="place"><div class="pn">Parcheggio Orlando (Apcoa)</div><div class="pd">Under the Tribunal, old town. Near Capo Market & Teatro Massimo.</div><div class="pmeta">${map('Parcheggio Orlando Apcoa Palermo','Open in Maps')}</div></div>
+    <div class="place"><div class="pn">Parcheggio Piazzale Ungheria</div><div class="pd">Behind Via Ruggiero Settimo, modern town. Limited spaces.</div><div class="pmeta">${map('Parcheggio Piazzale Ungheria Palermo','Open in Maps')}</div></div>
+    <div class="place"><div class="pn">Lungomare Yasser Arafat</div><div class="pd">Street parking on the waterfront — for the oldest parts of Palermo.</div><div class="pmeta">${map('Lungomare Yasser Arafat Palermo','Open in Maps')}</div></div>`
+  },
+  damages:{
+    title:"Damages & payments",
+    body:`<p>If anything's damaged, tell the owner or local team as soon as possible and settle before you leave if you can.</p>
+    <div class="note"><strong>Card payments</strong> for extra services or damages you couldn't pay in cash carry a <strong>5% admin charge</strong>. Extra services & hampers are normally paid <strong>in cash</strong> to the staff/owner.</div>`
+  },
+  checkin:{
+    title:"Check-in & check-out",
+    body:`<div class="kv"><span class="k">Check-in from</span><span class="v">16:00</span></div>
+    <div class="kv"><span class="k">Check-out by</span><span class="v">10:00</span></div>
+    <p style="margin-top:12px">Running late? <strong>Call the local team in advance</strong> so they can tell the owner. Need a very early checkout? They can arrange the handover the evening before.</p>
+    <p>Cleaning after checkout is included — just leave things tidy and <strong>run the dishwasher</strong> before you go.</p>
+    <p><strong>Early arrival / late flight?</strong> The team can suggest beach resorts, hotels & luggage drop-offs. Book stopover solutions ahead in peak summer.</p>`
+  },
+  hampers:{
+    title:"Food hampers (pre-arrival)",
+    body:`<p>Order through the local team before arrival. Pay in cash on arrival. Cancel within 48h of arrival (after shopping's done) and you cover the receipts.</p>
+    <div class="kv"><span class="k">Small</span><span class="v">~€100 <span style="color:var(--ink-soft);font-weight:400">+ €30 fee</span></span></div>
+    <div class="kv"><span class="k">Medium</span><span class="v">~€150 <span style="color:var(--ink-soft);font-weight:400">+ €35 fee</span></span></div>
+    <div class="kv"><span class="k">Large</span><span class="v">~€200 <span style="color:var(--ink-soft);font-weight:400">+ €40 fee</span></span></div>
+    <p style="margin-top:12px;font-size:13px">All include pasta, passata, pesto, olive oil, fruit & veg, cheese, eggs, milk, bread, water, juice & cured meats. Larger sizes add yoghurt, tuna, olives, cereal, more meat & a sweet treat.</p>`
+  },
+  generalSafety:{
+    title:"General health & safety",
+    body:`<p>Reasonable steps are taken for a safe stay, but standards vary by country. Full standards at <a class="maplink" target="_blank" rel="noopener" href="https://www.thethinkingtraveller.com/booking-your-holiday/health-and-safety">thethinkingtraveller.com</a>.</p>`
+  },
+  emergencyNums:[
+    {lab:"All emergencies",val:"112",sub:"European number"},
+    {lab:"Ambulance",val:"118",sub:"Medical"},
+    {lab:"Fire",val:"115",sub:"Vigili del fuoco"},
+    {lab:"Police",val:"113",sub:"Polizia"}
+  ]
+};
+
+/* ============ AL JAFAR ============ */
+const ALJAFAR = {
+  name:"Al Jafar",
+  locale:`Restored medieval tower near <span>Paceco · Trapani</span>, western Sicily`,
+  gps:"37.962846,12.564952",
+  wifi:{net:"Connection points throughout",pass:"aljafar2021"},
+  caretakers:"Mommo & Nadia (+ sister Lidia) · little English",
+  essentials(){
+    return [
+      {cls:"dark",lab:"Wi-Fi password",val:this.wifi.pass,sub:"Points inside & out",href:null,copy:true},
+      {cls:"terra",lab:"Villa location",val:"Open in Maps",sub:"Tap for GPS route",href:gps(this.gps)},
+      {cls:"",lab:"Check-in / out",val:"16:00 / 10:00",sub:"Call team if late",href:null},
+      {cls:"",lab:"Water",val:"Drinkable",sub:"Filtered at the tap",href:null},
+      {cls:"wide",lab:"Daily service & breakfast",val:"Mon–Sat · breakfast 9:00",sub:"Mommo & Nadia, ~09:00–12:00 · none on Sun / bank holidays",href:null}
+    ];
+  },
+  homeCards(){return ["caretakers","pool","childpool","ac","fireplace","insects"];},
+  houseCards(){return ["checkin","service","extras","practical","ts_electrics","ts_water","ext_lighting","rubbish","damages"];},
+  cards:{
+    caretakers:{ico:"☕",title:"Your caretakers & breakfast",body:`<p><strong>Mommo & Nadia</strong> (and Nadia's sister <strong>Lidia</strong>) look after the villa. They speak a little English — call your Local Specialist if you need to explain something.</p>
+      <p>Service runs <strong>Mon–Sat, ~09:00–12:00</strong> (not Sundays/bank holidays). It starts with <strong>breakfast at 9:00</strong>, then cleaning. They have keys if you're out.</p>
+      <p>Breakfast is a generous spread — bread, croissants, local pastries, yoghurt, fruit, cheese, ham, juices, coffee & jams. All included. <span class="em">Tell them sweet vs savoury preferences & any allergies in advance.</span></p>`},
+    pool:{ico:"🏊",title:"The pool",body:`<div class="kv"><span class="k">Size</span><span class="v">18m × 4m</span></div><div class="kv"><span class="k">Depth</span><span class="v">1m – 2.6m</span></div>
+      <p style="margin-top:12px">Shower before swimming. A lifesaving ring/reach pole is poolside (tell your Specialist if missing).</p>
+      <div class="note warn"><strong>No diving. No glassware</strong> (plastic cups provided). Don't run the perimeter. Swimming at night or after alcohol isn't advised. Never leave children unsupervised — a float is not supervision.</div>
+      <p>Mommo checks/cleans the pool regularly and tends the gardens, usually in the afternoon.</p>`},
+    childpool:{ico:"🧒",title:"Children's pool & play area",body:`<p>Across the road there's a play area with a shallow children's pool — <strong>6m × 2.3m, 60cm deep</strong>.</p>
+      <div class="note warn">No supervision is provided. Children must be supervised by an adult at all times; use is at your own risk.</div>`},
+    ac:{ico:"❄️",title:"Air conditioning",body:`<div class="kv"><span class="k">Ideal setting</span><span class="v">23–26°C</span></div>
+      <p style="margin-top:12px">Going lower won't cool faster and can damage units. AC runs ~10°C below outside temp. Use the <strong>"sleep"</strong> button at night for quiet, steady temps.</p>
+      <div class="note">Switch units <strong>off</strong> when rooms are empty, windows are open, or you go out.</div>`},
+    fireplace:{ico:"🔥",title:"The fireplace",body:`<p>Decorative only — <strong>it cannot be used.</strong></p>`},
+    insects:{ico:"🦟",title:"Insects & wildlife",body:`<p>Sicilian countryside means insects. Avoid open doors/windows with lights on in the evening, use a plug-in anti-mosquito device in each room, and cover up / use repellent when eating outside after dark.</p>
+      <p>Close & lock doors, windows and shutters when out — for security, weather and unwanted wildlife.</p>`},
+    checkin:SHARED.checkin,
+    service:{ico:"🧺",title:"Service & linen included",body:`<p>Daily service Mon–Sat (breakfast + cleaning). Recycling removed daily.</p>
+      <p>Beds made & towels (incl. pool/beach) laid out on arrival. <strong>Sheets & towels changed at the mid-week clean</strong>; staying 2+ weeks adds a weekly change on your check-in day. If rooms are occupied during working hours, linen is left outside the door.</p>`},
+    extras:{ico:"➕",title:"Extra services (cash, local)",body:`<div class="kv"><span class="k">Extra cleaning / ironing / washing</span><span class="v">€15 / hr</span></div>
+      <div class="kv"><span class="k">Change of sheets</span><span class="v">€15 / room</span></div>
+      <div class="kv"><span class="k">Change of towels</span><span class="v">€15 / room</span></div>
+      <div class="kv"><span class="k">Sunday / bank holiday staff</span><span class="v">€15 / hr each</span></div>
+      <p style="margin-top:12px;font-size:13px">Request early — suppliers aren't always available last minute. Paid locally in cash.</p>`},
+    practical:{ico:"⚙️",title:"Kitchen, water & living",body:`<p><strong>Water</strong> from the taps is drinkable (filtered on arrival).</p>
+      <p><strong>Dishwasher:</strong> rinse food off plates first to protect the filter.</p>
+      <p><strong>Bathrooms:</strong> only small amounts of toilet paper down the loo — use bins otherwise. If a shower drains slowly, clear hair from the wire mesh in the plug.</p>
+      <p><strong>Electricity & heating:</strong> use sparingly — lights off in daytime, AC/heating off when out or windows open.</p>
+      <p><strong>Books:</strong> library is shelved by publisher & subject — return to place. <strong>Security cameras:</strong> a few external ones around the property. Bring in cushions & close umbrellas at night/in wind.</p>`},
+    ts_electrics:{ico:"⚡",title:"Power cut — what to do",body:`<p>Emergency lighting comes on automatically. <strong>Mornings:</strong> ask the staff to check.</p>
+      <p><strong>Afternoon/evening (staff gone):</strong></p>
+      <ol class="steps">
+        <li>Turn off all high-voltage appliances.</li>
+        <li>Go to the big wooden door by the road entrance — on the right is the main fuse box marked <strong>"quadro elettrico"</strong>. Make sure all <strong>"generale"</strong> switches are up.</li>
+        <li>Still out? Check the ground-floor box <strong>behind the kitchen in the pantry</strong> (right-hand wall) — switches up.</li>
+        <li>Still out? The mains <strong>ENEL box</strong> is by the road at the end of the entrance wall — 2 grey panels, the <strong>right one is Al Jafar</strong>. Switch up.</li>
+        <li>Still nothing → call your Local Specialist.</li>
+      </ol>`},
+    ts_water:{ico:"🔥",title:"Hot water & gas",body:`<p>Hot water comes from a <strong>gas boiler near the kitchen</strong>. No hot water? It may need a reset — call your Specialist and they'll send the caretakers.</p>
+      <div class="note warn"><strong>Emergency gas shut-off:</strong> a <strong>yellow handle under the sink</strong> — turn it the opposite way to shut off the gas.</div>
+      <p>For any water-supply issue, speak to staff or call your Specialist.</p>`},
+    ext_lighting:{ico:"💡",title:"Outdoor lighting switches",body:`<p>By the big wooden door at the road entrance:</p>
+      <div class="kv"><span class="k">L. Ingresso</span><span class="v">Entrance lights</span></div>
+      <div class="kv"><span class="k">L. Esterna</span><span class="v">External lights</span></div>
+      <div class="kv"><span class="k">L. Cortile</span><span class="v">Courtyard lights</span></div>
+      <div class="kv"><span class="k">L. Scala</span><span class="v">Stair lights</span></div>
+      <div class="kv"><span class="k">F. Palma</span><span class="v">Palm-tree spotlight</span></div>`},
+    rubbish:{ico:"♻️",title:"Rubbish & recycling",body:`<div class="note warn">No mixed-rubbish disposal exists in the area and the council <strong>fines incorrect separation</strong>. Separate into the recycling bins in/outside the kitchen (shown at check-in) — caretakers remove it daily.</div>`},
+    damages:SHARED.damages
+  },
+  out:{
+    sub:"Paceco · Trapani · beaches & parking",
+    cards:["aj_shops","aj_cafe","aj_pharm","aj_bank","aj_beaches","aj_parking","easypark","palermoZtl"]
+  },
+  outCards:{
+    aj_shops:{ico:"🛒",title:"Supermarkets & food shops",body:`
+      <div class="place"><div class="pn">Conad Superstore — first big shop</div><div class="pd">SP21 Via Libica, Trapani · 15 min. Daily 8.30–20.30 incl. Sundays. Good range + wines.</div><div class="pmeta">${map('Conad Superstore Via Libica Trapani','Maps')}</div></div>
+      <div class="place"><div class="pn">Conad City</div><div class="pd">Via Circonvallazione Est, Paceco · small local. Mon–Fri 8.30–13.30 & 16–20, Sat 8.30–20.15, Sun 8.30–13.</div></div>
+      <div class="place"><div class="pn">SISA</div><div class="pd">Via Ugo Foscolo 104, Paceco. Mon–Sat 8–20.30, Sun 8–13.30.</div></div>
+      <div class="place"><div class="pn">Local favourites in Paceco</div><div class="pd">Arte Pasta (fresh pasta) · Panificio Samannà (bakery) · Pescheria La Sirena 2 (fish) · Carne Mancuso & Carne Augugliaro (butchers) · Gelateria Parinello (gelato)</div></div>`},
+    aj_cafe:{ico:"☕",title:"Best local café",body:`<div class="place"><div class="pn">El Chico</div><div class="pd">Via Tenente Serafino Montalto 100, Paceco. Sweets, cakes, gelato & coffee — try the cannoli!</div><div class="pmeta">${map('El Chico Paceco','Maps')}</div></div>`},
+    aj_pharm:{ico:"💊",title:"Pharmacies — Paceco",body:`
+      <div class="place"><div class="pn">Farmacia Accardo</div><div class="pd">Via Tenente Serafino Montalto 23</div></div>
+      <div class="place"><div class="pn">Farmacia Blunda</div><div class="pd">Via Dante Alighieri 14</div></div>`},
+    aj_bank:{ico:"🏦",title:"Banks — Paceco",body:`<p style="font-size:13px">Generally Mon–Fri 08:20–13:20 & 14:45–15:45.</p>
+      <div class="place"><div class="pn">Intesa SanPaolo</div><div class="pd">Via Tenente Serafino Montalto 100</div></div>
+      <div class="place"><div class="pn">Unicredit</div><div class="pd">Via Regina Margherita 28</div></div>`},
+    aj_beaches:{ico:"🏖️",title:"Beaches & lidos",body:`<p style="font-size:13px">Closest sandy beaches are ~20 min, north of Trapani. Book lidos ahead in peak summer (the team can help).</p>
+      <div class="place"><div class="pn">Isla Bianca</div><div class="pd">Modern upmarket lido with restaurant.</div><div class="pmeta"><a class="maplink" target="_blank" rel="noopener" href="https://www.islablancabeach.com">islablancabeach.com</a></div></div>
+      <div class="place"><div class="pn">Nais Beach Club</div><div class="pd">Refined lido on San Giuliano beach; restaurant lunch & dinner.</div><div class="pmeta"><a class="maplink" target="_blank" rel="noopener" href="https://www.naisbeachclubtrapani.com">naisbeachclubtrapani.com</a></div></div>
+      <div class="place"><div class="pn">AC Beach</div><div class="pd">Family-friendly near Trapani — kids' play area, beach sports.</div><div class="pmeta"><a class="maplink" target="_blank" rel="noopener" href="https://www.acbeach.it">acbeach.it</a></div></div>`},
+    aj_parking:{ico:"🅿️",title:"Parking in Trapani & Erice",body:`<p><strong>Trapani port / waterfront:</strong> mostly blue-lined paid parking (~€1/hr). In Jul–Aug allow extra time before boat trips. Pay by EasyPark or coins; display the ticket. <strong>Parcheggio Egadi</strong> (book online, ~10 min walk to ferries) or long-term parking on Via Libica 19 with minivan to the port (${tel('0039 0923 444221')}).</p>
+      <p><strong>Erice (hilltop town):</strong> park near the cable car below in Trapani (check it's running at <a class="maplink" target="_blank" rel="noopener" href="https://www.funiviaerice.it/en">funiviaerice.it</a>), or drive up (~20 min winding) to blue-lined paid parking near the old town.</p>`},
+    easypark:SHARED.easypark,
+    palermoZtl:SHARED.palermoZtl
+  },
+  eat:{
+    sub:"Guarrato farm fare · seafood in Trapani",
+    cards:["aj_guarrato","aj_trapani"]
+  },
+  eatCards:{
+    aj_guarrato:{ico:"🌾",title:"Guarrato — countryside farm restaurants",body:`
+      <div class="place"><div class="pn">Agriturismo Vultaggio ${price('€€')}</div><div class="pd">Via Quartana, Contrada Miliscemi. Farm-grown ingredients.</div><div class="pmeta">${tel('0039 092 386 4261')} · ${map('Agriturismo Vultaggio Trapani','Maps')}</div></div>
+      <div class="place"><div class="pn">Agriturismo Sanacore ${price('€€')}</div><div class="pd">Strada Misilscemi. Traditional Trapanese incl. couscous.</div><div class="pmeta">${tel('0039 092 386 4279')} · ${map('Agriturismo Sanacore Trapani','Maps')}</div></div>`},
+    aj_trapani:{ico:"🐟",title:"Trapani — seafood & old town (~20 min)",body:`
+      <div class="place"><div class="pn">Taverna Paradiso ${price('€€–€€€')}</div><div class="pd">Lungomare Dante Alighieri 22. The locals' fish pick — check prices when choosing your fish. Closed Sun.</div><div class="pmeta">${tel('0039 0923 22303')}</div></div>
+      <div class="place"><div class="pn">Osteria La Bettolaccia ${price('€€')}</div><div class="pd">Via Enrico Fardella 25. Quiet seafood spot, good wine. Sat/Sun dinner only.</div><div class="pmeta">${tel('0039 0923 25932')}</div></div>
+      <div class="place"><div class="pn">Tavernetta Ai Lumi ${price('€€')}</div><div class="pd">Corso Vittorio Emanuele 75. Meat & fish, fair prices. Closed Jul & Sun.</div><div class="pmeta">${tel('0039 0923 872418')}</div></div>
+      <div class="place"><div class="pn">Serisso 47 ${price('€€–€€€')}</div><div class="pd">Via Serisso 47. Top-level Sicilian fish, old town.</div><div class="pmeta">${tel('0039 0923 26113')}</div></div>
+      <div class="place"><div class="pn">Ristorante Stravento ${price('€€–€€€')}</div><div class="pd">Viale delle Sirene 15. Fresh seafood, lovely atmosphere. Closed Mon.</div><div class="pmeta">${tel('0039 338 465 5288')}</div></div>
+      <div class="place"><div class="pn">La Perla ${price('€€–€€€')}</div><div class="pd">Lungomare Dante Alighieri 18. Seafood + great pizza. Closed Tue.</div><div class="pmeta">${tel('0039 0923 26262')}</div></div>
+      <div class="place"><div class="pn">Caupona Taverna di Sicilia ${price('€€–€€€')}</div><div class="pd">Via S. Francesco d'Assisi 32. Don't miss the couscous. Closed Tue.</div><div class="pmeta">${tel('0039 0923 546618')}</div></div>
+      <div class="place"><div class="pn">Salamureci ${price('€€–€€€')}</div><div class="pd">Piazza Generale Scio 17. Fresh, authentic, central.</div><div class="pmeta">${tel('0039 0923 21728')}</div></div>
+      <div class="place"><div class="pn">Gli Archi di San Carlo ${price('€€–€€€')}</div><div class="pd">Via Serisso 40. Busiate & seafood, cosy. Closed Wed.</div><div class="pmeta">${tel('0039 339 2346579')}</div></div>
+      <div class="place"><div class="pn">Osteria il Moro ${price('€€€€')}</div><div class="pd">Via Garibaldi 86. Creative Sicilian by chef Nicola Bandi. Closed Wed/Thu.</div><div class="pmeta">${tel('0039 0923 23194')}</div></div>
+      <div class="place"><div class="pn">Santagostino — Baglio Sorìa ${price('€€€–€€€€')}</div><div class="pd">Via Soria. Fine dining amid vineyards. Daily.</div><div class="pmeta">${tel('0039 0923 861679')}</div></div>
+      <div class="place"><div class="pn">Locanda sul Mare ${price('€€–€€€')}</div><div class="pd">Via Scilla 2, Marausa beach near the airport. Egadi views, fresh fish.</div><div class="pmeta">${tel('0039 0923 842478')}</div></div>
+      <div class="place"><div class="pn">Also: Vintage ${price('€€')} · Osteria Vineria A Casa Mia ${price('€€')} · Al Vicoletto ${price('€€–€€€')} · Osteria La Dolce Vita ${price('€€–€€€')}</div></div>`}
+  },
+  sos:{
+    cards:["aj_hospital","aj_guardia","aj_safety","support","hampers","generalSafety"]
+  },
+  sosCards:{
+    aj_hospital:{ico:"🏥",title:"Hospital — Trapani",body:`<div class="place"><div class="pn">Ospedale San Antonio Abate</div><div class="pd">Via Cosenza 82, Trapani</div><div class="pmeta">${tel('0039 0923 809 111')} · ${map('Ospedale Sant Antonio Abate Trapani','Maps')}</div></div>`},
+    aj_guardia:{ico:"⚕️",title:"Emergency first aid (Guardia Medica)",body:`<p style="font-size:13px">Often evenings only (20:00–08:00) — phone ahead or call your Specialist.</p>
+      <div class="place"><div class="pn">Paceco</div><div class="pd">Via Francesco Crispi 1</div><div class="pmeta">${tel('0039 0923 881309')}</div></div>
+      <div class="place"><div class="pn">Marausa</div><div class="pd">Str. Generale E. Rinaldo 105</div><div class="pmeta">${tel('0039 0923 841795')}</div></div>
+      <p style="margin-top:10px">For a doctor or dentist, your local chemist can usually point you the right way.</p>`},
+    aj_safety:{ico:"⚠️",title:"Safety at the villa",body:`<p>Al Jafar is a restored <strong>medieval tower</strong> with character — and some hazards:</p>
+      <div class="note warn"><strong>Tower roof terraces:</strong> upper terraces have low walls & big drops. Main-tower upper access is blocked (chain + plant pot); the small-tower viewing door should stay <strong>locked</strong>.</div>
+      <p><strong>Staircases:</strong> 3 levels + a mezzanine with open railings, plus a spiral stair — may not suit limited mobility. Supervise children throughout.</p>
+      <p><strong>Open farmland</strong> around the villa is unfenced — keep younger children supervised outside the walls. Tell the team in advance about young children and they'll help protect risk areas.</p>`},
+    support:SHARED.support,
+    hampers:SHARED.hampers,
+    generalSafety:SHARED.generalSafety
+  }
+};
+
+/* ============ MINERVA ============ */
+const MINERVA = {
+  name:"Minerva",
+  locale:`Villa in the Fondo Anfossi estate · <span>Mondello · Palermo</span>`,
+  gps:"38.189054,13.328553",
+  wifi:{net:"Orbilugano",pass:"beatrice"},
+  caretakers:"Simona (caretaker) · daily maid service",
+  essentials(){
+    return [
+      {cls:"dark",lab:"Wi-Fi",val:this.wifi.pass,sub:"Network: "+this.wifi.net,href:null,copy:true},
+      {cls:"terra",lab:"Estate gate",val:"Open in Maps",sub:'Ask gateman for "Spadafora"',href:gps(this.gps)},
+      {cls:"",lab:"Check-in / out",val:"16:00 / 10:00",sub:"Call team if late",href:null},
+      {cls:"",lab:"Tap water",val:"Not drinkable",sub:"OK for cooking/showers",href:null},
+      {cls:"wide",lab:"Finding the villa",val:'No. 7, green gate · Via Lugano',sub:"Ring intercom — Simona opens the gate",href:null}
+    ];
+  },
+  homeCards(){return ["mn_arrival","pool","poolheat","ac","sonos","sky","bikes","insects"];},
+  houseCards(){return ["checkin","cleaning","extras","kitchen","practical","ts_electrics","ts_acrestart","ts_water","ts_outdoor","rubbish","damages"];},
+  cards:{
+    mn_arrival:{ico:"🚗",title:"Getting there & the gate",body:`<div class="note"><strong>Headlights on</strong> while on the motorway/autostrada.</div>
+      <p>GPS takes you to the <strong>Fondo Anfossi</strong> estate entrance (~30 min from Palermo airport via A29 → Tommaso Natale/Mondello exit). At the gate, tell the gateman you're staying at <strong>"Spadafora"</strong>.</p>
+      <p>Inside: first right into <strong>Via Lossana</strong> → first left into <strong>Via Genevra</strong> → right onto <strong>Via Lugano</strong>. Minerva is up on the left — <strong>no. 7, green gate</strong>. Ring the intercom; Simona opens up.</p>
+      <div class="pmeta">${map('Fondo Anfossi Mondello','Open estate in Maps')}</div>`},
+    pool:{ico:"🏊",title:"The pool",body:`<div class="kv"><span class="k">Size</span><span class="v">12m × 3m</span></div><div class="kv"><span class="k">Depth</span><span class="v">1.3m throughout</span></div>
+      <p style="margin-top:12px">Shower before swimming. Lifesaving ring/pole poolside. Cleaned twice weekly by an external company (times confirmed at check-in).</p>
+      <div class="note warn"><strong>No diving. No glassware.</strong> Don't run the perimeter. No night/post-alcohol swimming advised. Children supervised at all times.</div>
+      <p><strong>Pool lights</strong> aren't automatic: fuse box in the long cupboard left of the main entrance — flick <strong>"luci piscina"</strong> up.</p>`},
+    poolheat:{ico:"🌡️",title:"Pool heating (on request)",body:`<p>Request <strong>at least a week ahead</strong> — it takes several days to warm and payment is needed first. Set ~27°C.</p>
+      <div class="note">Always use the <strong>pool cover</strong> while heating, when not in use, and at night — otherwise it won't hold temperature. Efficacy depends on weather; no minimum temp guaranteed.</div>`},
+    ac:{ico:"❄️",title:"Air-cooling system",body:`<p>An eco-friendly <strong>water-cooled system</strong> (min 24°C) runs through living areas & bedrooms — except the lower-ground bedroom, which uses an AC unit in the adjacent living area. The <strong>master bedroom</strong> also has a traditional AC unit.</p>
+      <div class="kv"><span class="k">Ideal setting</span><span class="v">24–26°C</span></div>
+      <p style="margin-top:12px">Too low won't cool faster & can damage units. Use the <strong>"sleep"</strong> button at night. Switch off when rooms empty, windows open or going out.</p>`},
+    sonos:{ico:"🔊",title:"Sonos speakers",body:`<p>Two Sonos speakers (living room + upstairs). Download the Sonos app, then select:</p>
+      <div class="kv"><span class="k">Ground floor</span><span class="v">Staziona Esterna</span></div>
+      <div class="kv"><span class="k">First floor</span><span class="v">Stazione Interna</span></div>`},
+    sky:{ico:"📺",title:"Sky / TV",body:`<p>Main <strong>Sky</strong> in the ground-floor living room (card in the decoder) — includes <strong>Movies & Sport</strong>. Lower ground floor has <strong>Apple TV + basic Sky</strong> (no movies). Cards can be swapped between rooms.</p>`},
+    bikes:{ico:"🚲",title:"Bicycles",body:`<p>Two bikes for guests (one men's, one women's). Chains & locks provided — please use them whenever the bikes are left unattended.</p>`},
+    insects:{ico:"🦟",title:"Insects & wildlife",body:`<p>Avoid open doors/windows with lights on after dark, use a plug-in anti-mosquito device per room, cover up / use repellent when eating outside. Close & lock doors, windows and shutters when out.</p>`},
+    checkin:SHARED.checkin,
+    cleaning:{ico:"🧺",title:"Cleaning & linen included",body:`<p>Full weekly clean + linen change, plus <strong>3 hours' daily maid service</strong> (not Sundays/bank holidays — timing agreed at check-in). The maid removes rubbish daily and has keys if you're out.</p>
+      <p>Beds made & towels (incl. pool/beach) on arrival. Sheets/towels changed mid-week; 2+ weeks adds a weekly change. If rooms are occupied, linen is left outside.</p>`},
+    extras:{ico:"➕",title:"Extra services (cash, local)",body:`<div class="kv"><span class="k">Extra cleaning</span><span class="v">€10 / hr · min 2 hrs</span></div>
+      <div class="kv"><span class="k">Extra linen/towels</span><span class="v">€20 / room</span></div>
+      <p style="margin-top:12px;font-size:13px">(Sheets + bath + pool/beach towels.) Request early; paid locally.</p>`},
+    kitchen:{ico:"🍳",title:"Kitchen notes",body:`<p><strong>Induction hobs</strong> — only work with the special pans in the cupboard <strong>below the sink</strong>.</p>
+      <p><strong>Knives:</strong> in a small sliding drawer near the top of the main kitchen drawer (easy to miss).</p>`},
+    practical:{ico:"⚙️",title:"Water, bathrooms & living",body:`<div class="note warn"><strong>Tap water is NOT drinkable</strong> (town supply, uncertified). Fine for cooking, showers & brushing teeth — drink bottled.</div>
+      <p><strong>Dishwasher:</strong> rinse food off first. <strong>Bathrooms:</strong> only small amounts of toilet paper down the loo; clear hair from the plug mesh if a shower drains slowly.</p>
+      <p><strong>Ground-floor bathroom:</strong> the mirror opens — hairdryer & first-aid kit inside.</p>
+      <p>The gardener visits 1–2× weekly (discreet). Bring in cushions & close umbrellas at night/in wind. Use electricity & heating sparingly.</p>`},
+    ts_electrics:{ico:"⚡",title:"Power cut — what to do",body:`<ol class="steps">
+        <li>Turn off all high-voltage appliances.</li>
+        <li>Check the fuse box on <strong>each floor</strong>: ground floor — left of the main entrance (facing the door from inside); second floor — top of the stairs, inside the cupboard. All switches up.</li>
+        <li>Still out? The <strong>Enel meter</strong> is just outside the gate in a <strong>green metal cupboard</strong>. Its key is in the ground-floor fuse box — take it out, check switches are up.</li>
+        <li>Still nothing → call your Local Specialist.</li>
+      </ol>`},
+    ts_acrestart:{ico:"🧊",title:"AC stopped overnight? Restart",body:`<p>On very hot nights an overloaded local supply can trip the AC into security mode.</p>
+      <ol class="steps">
+        <li>Check the AC control panel in the <strong>first-floor corridor cupboard</strong> — red lights = security/alarm mode.</li>
+        <li>If red: go downstairs to the fuse box in the cupboard near the entrance, find the switch marked <strong>"chiller"</strong>, flick it <strong>down, wait 5 sec, back up</strong>.</li>
+        <li>Allow ~10–15 min for the water to chill again. Still issues → call your Specialist.</li>
+      </ol>`},
+    ts_water:{ico:"🔥",title:"Hot water",body:`<p>Heated by <strong>solar panels + backup</strong>. Rarely an issue, but the system is complex — if there's a problem, call your Specialist (needs a specialist technician).</p>`},
+    ts_outdoor:{ico:"💡",title:"Outdoor lights",body:`<p>Set to come on automatically at dusk. If they don't, check the switch <strong>near the dining table</strong> — it looks like a light switch but is marked <strong>I (on) / O (off)</strong>. Make sure it's on <strong>I</strong>.</p>`},
+    rubbish:{ico:"♻️",title:"Rubbish & recycling",body:`<div class="note warn">No mixed-rubbish disposal in the area; the council <strong>fines incorrect separation</strong>. Separate into bins in/outside the kitchen (shown at check-in) — the maid removes it daily.</div>`},
+    damages:SHARED.damages
+  },
+  out:{
+    sub:"Mondello · walk to the beach · Palermo",
+    cards:["mn_walk","mn_shops","mn_cafe","mn_pharm","mn_bank","mn_beaches","mn_parking","easypark","palermoZtl"]
+  },
+  outCards:{
+    mn_walk:{ico:"🚶",title:"Walking to Mondello beach",body:`<p>From the estate gate (Via Marinai Aliata): turn left, cross Viale Venere at the lights, right on Viale Venere to the end, left onto Via Margherita di Savoia.</p>
+      <p>Continue to the <strong>beachfront & waterfront</strong>, or turn left at Via dei Mater for Michelin-starred <strong>Bye Bye Blues</strong>. Both ~<strong>20–25 min</strong>. Turn left at the beachfront (Viale Regina Elena) to reach the main piazza (~15–20 min more) and its restaurants.</p>`},
+    mn_shops:{ico:"🛒",title:"Supermarkets & food shops",body:`
+      <div class="place"><div class="pn">Famila — closest (~1km)</div><div class="pd">Via Castelforte. 7 days 08:00–20:00. Left on Viale Venere then left at the first roundabout.</div><div class="pmeta">${map('Famila Via Castelforte Mondello','Maps')}</div></div>
+      <div class="place"><div class="pn">Eurospar — Centro Olimpo</div><div class="pd">Small mall you passed on the way in. 7 days 08:00–21:00.</div></div>
+      <div class="place"><div class="pn">Conad — Conca d'Oro mall (~10 min)</div><div class="pd">Via Lanza di Scalea. 7 days 09:00–21:00, 100+ shops.</div><div class="pmeta">${map('Centro Conca d Oro Palermo','Maps')}</div></div>
+      <div class="place"><div class="pn">Prezzemolo & Vitale</div><div class="pd">Via Torre di Mondello 2. Great Sicilian products & wines, sandwiches & ready meals.</div></div>
+      <div class="place"><div class="pn">Fresh fish</div><div class="pd">Early morning at the Mondello fishing harbour.</div></div>`},
+    mn_cafe:{ico:"☕",title:"Best local café",body:`<div class="place"><div class="pn">Bar Alba</div><div class="pd">Viale Margherita di Savoia 2 (before the Mondello roundabout from Palermo). Famous pistachio croissants, aperitivo & light lunch. Good for groups with kids.</div><div class="pmeta">${tel('0039 091 6840444')} · ${map('Bar Alba Mondello','Maps')}</div></div>`},
+    mn_pharm:{ico:"💊",title:"Pharmacies — Mondello",body:`
+      <div class="place"><div class="pn">Farmacia Dr. Valeria Mercadante</div><div class="pd">Viale Regina Elena 57. Mon–Fri 08:30–13:00 & 16:00–19:30 (wknd closed).</div><div class="pmeta">${tel('0039 091 450381')}</div></div>
+      <div class="place"><div class="pn">Farmacia Rizzo Maria Celeste</div><div class="pd">Piazza Mondello. Mon–Sat 08:30–20:30, Sun 08:30–20:00.</div></div>`},
+    mn_bank:{ico:"🏦",title:"Bank — Mondello",body:`<div class="place"><div class="pn">Banco di Sicilia</div><div class="pd">Viale Principe di Scalea 28</div></div>`},
+    mn_beaches:{ico:"🏖️",title:"Beaches & beach clubs",body:`
+      <div class="place"><div class="pn">Mondello Beach (Valdesi)</div><div class="pd">Sandy beach, turquoise water, snack bars. Go early; quieter on weekdays & outside Jul–Aug.</div></div>
+      <div class="place"><div class="pn">Lido l'Ombellico del Mondo</div><div class="pd">Casual spot toward the piazza — snack bar, kids' area, sunset aperitivo.</div><div class="pmeta">${tel('0039 091 452242')}</div></div>
+      <div class="place"><div class="pn">Telimar — private club, Addaura</div><div class="pd">Exclusive waterfront club (rocky, no sand). €50 adult / €30 (4–17) / under-4 free. Book 2–3 days ahead via the team. Bring towels. Closed Sat/Sun & bank holidays Jun–Aug; Mon all year.</div><div class="pmeta"><a class="maplink" target="_blank" rel="noopener" href="https://www.telimar.it">telimar.it</a></div></div>
+      <div class="place"><div class="pn">Costa Ponente — Capo Gallo</div><div class="pd">In the nature reserve; wooden platform into the sea (no sand). €25 pp, kiosk bar. Book ahead; bring towels.</div><div class="pmeta"><a class="maplink" target="_blank" rel="noopener" href="https://www.costaponente.it">costaponente.it</a></div></div>`},
+    mn_parking:{ico:"🅿️",title:"Parking in Mondello",body:`<p>Mondello's main square is a <strong>ZTL</strong>, usually Jun–Sep, 7 days, <strong>18:00–24:00</strong> (check local signs). Use the <strong>Galatea, Mongibello, Tolomea & Palinuro</strong> car parks (blue machines — display ticket) or EasyPark.</p>`},
+    easypark:SHARED.easypark,
+    palermoZtl:SHARED.palermoZtl
+  },
+  eat:{
+    sub:"Mondello — seafood, pizza & a Michelin star",
+    cards:["mn_rest"]
+  },
+  eatCards:{
+    mn_rest:{ico:"🐟",title:"Restaurants in Mondello",body:`
+      <div class="place"><div class="pn">Bye Bye Blues ★ ${price('€€€')}</div><div class="pd">Via del Garofalo 23. Michelin-starred — book ahead. Closed Mon.</div><div class="pmeta">${tel('0039 091 6841415')} · <a class="maplink" target="_blank" rel="noopener" href="https://www.byebyeblues.it">byebyeblues.it</a></div></div>
+      <div class="place"><div class="pn">Alias ${price('€€€')}</div><div class="pd">Via Danae 23. High-level revisited Sicilian, good wines.</div><div class="pmeta">${tel('0039 091 320699')}</div></div>
+      <div class="place"><div class="pn">Al Gabbiano ${price('€€')}</div><div class="pd">Via Piano di Gallo 1. Seafood, Mediterranean & pizza, seaside. Closed Mon.</div><div class="pmeta">${tel('0039 091 450313')}</div></div>
+      <div class="place"><div class="pn">Badalamenti Cucina e Bottega ${price('€€€')}</div><div class="pd">Viale Galatea 55. Seafood, homemade pasta, wide wine list.</div><div class="pmeta">${tel('0039 375 85543030')}</div></div>
+      <div class="place"><div class="pn">Trattoria da Piero ${price('€€€')}</div><div class="pd">Piazza Mondello 13. Excellent fresh fish. Daily 12–15:30 & 19–24.</div><div class="pmeta">${tel('0039 091 450747')}</div></div>
+      <div class="place"><div class="pn">Le Antiche Mura ${price('€€€')}</div><div class="pd">Via Mattei 1. Fresh fish & great service. Daily 12–15 & 19–24.</div><div class="pmeta">${tel('0039 091 453940')}</div></div>
+      <div class="place"><div class="pn">Alle Terrazze ${price('€€€')}</div><div class="pd">Viale Regina Elena, in the Liberty bathhouse. Panoramic sea terrace, gluten-free options. Closed Tue.</div><div class="pmeta">${tel('0039 091 6262903')}</div></div>
+      <div class="place"><div class="pn">Charleston ${price('€€€')}</div><div class="pd">Viale Regina Elena 37. Innovative, dinner only. Closed Wed (Sep–Jun) & Sun (Jul/Aug).</div><div class="pmeta">${tel('0039 091 450171')}</div></div>
+      <div class="place"><div class="pn">Trattoria Sympaty ${price('€€–€€€')}</div><div class="pd">V. Piano di Gallo 18, by the Coast Guard. Freshest fish; pasta with lobster. Daily in summer.</div><div class="pmeta">${tel('0039 091 454470')}</div></div>
+      <div class="place"><div class="pn">Poldo 2 ${price('€€')}</div><div class="pd">Via Torre di Mondello 22. Burgers, pasta & sushi; terrace with sea view.</div><div class="pmeta">${tel('0039 091 450049')}</div></div>
+      <div class="place"><div class="pn">Villa Clelia ${price('€€–€€€')}</div><div class="pd">Via Carbone 26. Elegant, great wine cellar — special occasions. Dinner daily + Sun lunch.</div><div class="pmeta">${tel('0039 091 6841843')}</div></div>
+      <div class="place"><div class="pn">Pizzeria Gli Amiconi ${price('€€')}</div><div class="pd">Via Castelforte 82. Wood-fired pizza, takeaway too.</div><div class="pmeta">${tel('0039 393 1262133')}</div></div>
+      <div class="place"><div class="pn">Sesto Canto ${price('€€–€€€')}</div><div class="pd">Via Sant'Oliva 26. Refined tradition-meets-innovation, top ingredients.</div><div class="pmeta">${tel('0039 091 324543')}</div></div>
+      <div class="place"><div class="pn">Didue Sea & Didue Jungle ${price('€€–€€€')}</div><div class="pd">Piazza Mondello. One seafood/sushi/pizza, one premium meats + gluten-free.</div><div class="pmeta">${tel('0039 389 5403795')}</div></div>`}
+  },
+  sos:{
+    cards:["mn_hospital","mn_guardia","mn_safety","support","hampers","generalSafety"]
+  },
+  sosCards:{
+    mn_hospital:{ico:"🏥",title:"Hospitals",body:`
+      <div class="place"><div class="pn">Villa Sofia — closest</div><div class="pd">Via Villa Sofia (near the football stadium).</div><div class="pmeta">${tel('0039 091 7801111')} · ${map('Ospedale Villa Sofia Palermo','Maps')}</div></div>
+      <div class="place"><div class="pn">Ospedale Cervello</div><div class="pd">Via Trabucco 180 — just off the A29 between Mondello & Palermo.</div><div class="pmeta">${tel('0039 091 6802111')}</div></div>`},
+    mn_guardia:{ico:"⚕️",title:"First aid & doctors — Mondello",body:`
+      <div class="place"><div class="pn">Guardia Medica</div><div class="pd">Via Lorenzo Landolino 12. Weekdays 20:00–08:00; weekends 10:00 until 08:00 next day.</div><div class="pmeta">${tel('0039 091 703 6091')}</div></div>
+      <div class="place"><div class="pn">Tourist first aid</div><div class="pd">Same street, no. 16 — all day for visits/prescriptions. Press intercom "turistica".</div></div>
+      <div class="place"><div class="pn">Private clinics</div><div class="pd">Centro Chirone · Centro Salus (closer to Palermo).</div><div class="pmeta"><a class="maplink" target="_blank" rel="noopener" href="https://www.centrochirone.it/contattaci">Chirone</a> · <a class="maplink" target="_blank" rel="noopener" href="https://www.centrosaluspalermo.it/">Salus</a></div></div>`},
+    mn_safety:{ico:"⚠️",title:"Safety at the villa",body:`<div class="note warn"><strong>Master bedroom terrace & bathroom:</strong> balconies with large gaps in the railings; the terrace has stairs to the roof. Keep these doors securely closed around small children and supervise.</div>
+      <p><strong>Back garden:</strong> to the right of the outdoor dining area there's an open drop — smaller drop screened by shrubs, largest drop has a barrier. Supervise children in the gardens.</p>
+      <p><strong>Staircase:</strong> open design — supervise children on the stairs.</p>`},
+    support:SHARED.support,
+    hampers:SHARED.hampers,
+    generalSafety:SHARED.generalSafety
+  }
+};
+
+const VILLAS = {aljafar:ALJAFAR, minerva:MINERVA};
+let current = 'minerva';
+
+/* ============ render ============ */
+function cardHTML(c, id){
+  return `<div class="card" id="card-${id}">
+    <div class="card-head" onclick="toggleCard('${id}')">
+      <h3><span class="ico">${c.ico||'•'}</span>${c.title}</h3>
+      <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6"/></svg>
+    </div>
+    <div class="card-body"><div class="card-inner">${c.body}</div></div>
+  </div>`;
+}
+function toggleCard(id){ document.getElementById('card-'+id).classList.toggle('open'); }
+
+function render(){
+  const v = VILLAS[current];
+  document.getElementById('locale').innerHTML = v.locale;
+  document.getElementById('btn-aljafar').classList.toggle('active', current==='aljafar');
+  document.getElementById('btn-minerva').classList.toggle('active', current==='minerva');
+
+  /* essentials */
+  const ess = v.essentials();
+  document.getElementById('essentials').innerHTML = ess.map(e=>{
+    const inner = `<div class="lab">${e.lab}</div><div class="val">${e.val}</div>${e.sub?`<div class="sub">${e.sub}</div>`:''}`;
+    if(e.href) return `<a class="ess ${e.cls}" href="${e.href}" target="_blank" rel="noopener">${inner}</a>`;
+    if(e.copy) return `<div class="ess ${e.cls}" onclick="copyText('${e.val}')" style="cursor:pointer">${inner}</div>`;
+    return `<div class="ess ${e.cls}">${inner}</div>`;
+  }).join('');
+
+  /* home cards */
+  document.getElementById('home-cards').innerHTML = v.homeCards().map(id=>cardHTML(v.cards[id]||SHARED[id], id)).join('');
+  /* house */
+  document.getElementById('house-cards').innerHTML = v.houseCards().map(id=>cardHTML(v.cards[id]||SHARED[id], id)).join('');
+  /* out */
+  document.getElementById('out-sub').textContent = v.out.sub;
+  document.getElementById('out-cards').innerHTML = v.out.cards.map(id=>cardHTML(v.outCards[id]||SHARED[id], id)).join('');
+  /* eat */
+  document.getElementById('eat-sub').textContent = v.eat.sub;
+  document.getElementById('eat-cards').innerHTML = v.eat.cards.map(id=>cardHTML(v.eatCards[id], id)).join('');
+  /* sos */
+  document.getElementById('sos-numbers').innerHTML = SHARED.emergencyNums.map(n=>
+    `<a class="ess terra" href="tel:${n.val}"><div class="lab">${n.lab}</div><div class="val">${n.val}</div><div class="sub">${n.sub}</div></a>`
+  ).join('');
+  document.getElementById('sos-cards').innerHTML = v.sos.cards.map(id=>cardHTML(v.sosCards[id]||SHARED[id], id)).join('');
+
+  /* clear search */
+  const s=document.getElementById('search'); if(s) s.value='';
+  document.getElementById('search-wrap').style.display='none';
+  document.getElementById('home-content').style.display='';
+}
+
+function setVilla(key){
+  if(current===key) return;
+  current = key;
+  render();
+  setView('home', document.querySelector('nav.tabs button[data-view="home"]'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function setView(view, btn){
+  document.querySelectorAll('.view').forEach(s=>s.classList.remove('active'));
+  document.getElementById('view-'+view).classList.add('active');
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  (btn||document.querySelector(`nav.tabs button[data-view="${view}"]`)).classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+}
+
+function copyText(t){
+  navigator.clipboard && navigator.clipboard.writeText(t);
+  const els=[...document.querySelectorAll('.ess.dark .val')];
+  // brief feedback
+  const el = event.currentTarget.querySelector('.val');
+  const orig = el.textContent; el.textContent='Copied ✓';
+  setTimeout(()=>el.textContent=orig, 1100);
+}
+
+/* ============ search ============ */
+function buildIndex(v){
+  const idx=[];
+  const add=(coll,viewName,tabKey)=>{Object.entries(coll).forEach(([id,c])=>{
+    idx.push({id, title:c.title, ico:c.ico, body:c.body, view:viewName, tab:tabKey});
+  });};
+  add(v.cards,'house','house'); // primary home
+  add(v.outCards,'out','out');
+  add(v.eatCards,'eat','eat');
+  add(v.sosCards,'sos','sos');
+  // de-dupe by id (cards shared between home & house)
+  const seen={}; return idx.filter(x=>{if(seen[x.id])return false;seen[x.id]=true;return true;});
+}
+function stripHTML(h){return h.replace(/<[^>]+>/g,' ').replace(/&[a-z]+;/g,' ');}
+
+function runSearch(q){
+  const wrap=document.getElementById('search-wrap');
+  const home=document.getElementById('home-content');
+  q=q.trim().toLowerCase();
+  if(!q){wrap.style.display='none';home.style.display='';return;}
+  home.style.display='none';wrap.style.display='';
+  const v=VILLAS[current];
+  const idx=buildIndex(v);
+  const hits=idx.map(item=>{
+    const hay=(item.title+' '+stripHTML(item.body)).toLowerCase();
+    let score=0;
+    q.split(/\s+/).forEach(w=>{
+      if(item.title.toLowerCase().includes(w)) score+=5;
+      if(hay.includes(w)) score+=1;
+    });
+    return {item,score};
+  }).filter(h=>h.score>0).sort((a,b)=>b.score-a.score).slice(0,8);
+
+  if(!hits.length){wrap.innerHTML=`<div class="no-res">Nothing found for "${q}". Try a simpler word like wifi, pizza, fuse, beach or pharmacy.</div>`;return;}
+  wrap.innerHTML='<div class="cards">'+hits.map(h=>{
+    const c=h.item;
+    return `<div class="card open" id="card-${c.id}">
+      <div class="card-head" onclick="toggleCard('${c.id}')">
+        <h3><span class="ico">${c.ico||'•'}</span>${c.title}</h3>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+      <div class="card-body"><div class="card-inner">${c.body}</div></div>
+    </div>`;
+  }).join('')+'</div>';
+}
+
+render();
+</script>
+</body>
+</html>
