@@ -337,67 +337,70 @@ const DAYS={
     {type:"resto",h:"🛋️ Plaza Premium Lounge — FCO T1",bd:"Showers (30 min), unlimited food & drink, Wi-Fi · Priority Pass · Schengen Departures, Terminal 1 (onward boarding pass required)."}
   ]},
 2:{theme:"minerva",date:"Sat Jun 20",dl:"Day 2",iso:"2026-06-20",title:"Arrival & Villa Minerva",sub:"Land Palermo · rental cars · Mondello",mini:["travel:Arrival","villa:Villa Night"],
+  blocks:[{type:"split",h:"🔀 Monreale option — Bev & Mary Jo (Saturday morning)",bd:"While Jeff collects Rich from Hotel Tonic (~2pm), Bev & MJ can visit Monreale Cathedral — the greatest Norman mosaic cycle in the world (6,000m² gold, 12th c.). Open 9am–5:30pm, ~20 min from villa. Saturday is ideal — Sunday has mass restrictions. Rejoin by 2pm."}],
   tl:[
-    {time:"11:30am",txt:"Land at <strong>Palermo (PMO)</strong>. Collect 2 Europcar Opel Grandland Automatics — Jeff (#1198342651) & Bev (#1198342794)."},
-    {time:"12:30pm",txt:"Drive ~25 min to <strong>Villa Minerva</strong>, Mondello (Via Lugano 7).",map:"Via Lugano 7 Mondello Palermo"},
-    {time:"4:00pm",txt:"Check in. Settle, nap, pool & gardens."},
-    {time:"8:00pm",dot:"hi",txt:"Private cook arrives ~6pm; dinner served 8pm."}
+    {time:"7:30am",txt:"<strong>Rich</strong> arrives PMO — heads to <strong>Hotel Tonic</strong>, Via Mariano Stabile 126, Palermo to rest until ~2pm. Jeff collects once car is picked up."},
+    {time:"11:30am",txt:"Land at <strong>Palermo (PMO)</strong>. Pick up rental cars — Jeff: <strong>Avis #07172221US0</strong> · Bev: <strong>Avis #1198342794</strong>."},
+    {time:"~2:00pm",txt:"Collect <strong>Rich</strong> at Hotel Tonic. Grocery stop at <strong>Eurospar</strong> (Centro Olimpo — on route, no detour): eggs ×24, bread, butter, jam, cereal, yogurt, milk 4–6L, coffee, fruit, snacks, water ×4 six-packs. Wine case pre-ordered to villa. Then drive to Mondello."},
+    {time:"4:00pm",txt:"Check in <strong>Villa Minerva</strong> (Via Lugano 7). Pool, gardens, settle in.",map:"Via Lugano 7 Mondello Palermo"},
+    {time:"5:55pm",txt:"<strong>Scott</strong> arrives PMO — makes own way to villa (separate rental)."},
+    {time:"8:00pm",dot:"hi",txt:"Private cook dinner — cook arrives 6pm, dinner at 8pm."}
   ],
-  blocks:[
-    {type:"menu",h:"Private Cook — First Night",courses:[["Antipasto","Panelle — crispy chickpea fritters with lemon"],["Primo","Busiate con pesto alla trapanese — tomato, almonds, garlic, basil"],["Dolce","Granita di limone con pistacchi di Bronte & brioche"]]},
-    {type:"alert",h:"⚠️ Car rental",bd:"Bring driver's licence + credit card matching the driver's name for the security deposit."}
-  ]},
-3:{theme:"minerva",date:"Sun Jun 21",dl:"Day 3",iso:"2026-06-21",title:"Palermo Walking Tour",sub:"Baroque piazzas · markets · Norman treasures",mini:["culture:Culture","dining:2 Dinners"],
-  blocks:[{type:"split",h:"🔀 Monreale option for Bev",bd:"Visit Monreale Cathedral first (~20 min) — the world's greatest Norman mosaic cycle (6,000m² gold, 12th c.), open 9am–5:30pm. Rejoin at 1pm for Moltivolti lunch."}],
+  blocks2:[{type:"alert",h:"⚠️ Car rental",bd:"Bring driver's licence + credit card matching the driver's name for the security deposit."}]},
+3:{theme:"minerva",date:"Sun Jun 21",dl:"Day 3",iso:"2026-06-21",title:"Palermo Walking Tour",sub:"Morning walk · casual lunch · afternoon rest · evening return",mini:["culture:Culture","dining:Dinner"],
+  blocks:[{type:"split",h:"📋 Moltivolti",bd:"Google reservation for 8 at 1pm (ID 0362-4B81-C9BE-7083) — keeping for now. Plan is to do Nino u'Ballerino for casual lunch instead. Cancel Moltivolti via Google if group decides to skip."}],
   tl:[
-    {time:"10:30am",txt:"Drive to Palermo (~25 min). Park at <strong>Parcheggio del Centrostorico</strong>, Via Rossini 14 (24h, ~€20–25 half day; staff handle ZTL). Don't drive into the historic centre.",map:"Parcheggio Centro Storico Via Rossini Palermo"},
-    {time:"10:30am",txt:"<strong>Quattro Canti & Fontana Pretoria</strong> — baroque heart & the 'Fountain of Shame'. ~30 min."},
-    {time:"11:00am",txt:"<strong>Palermo Cathedral</strong> — 900 years of layered architecture; rooftop terrace views. ~1 hr."},
-    {time:"12:00pm",txt:"<strong>Mercato Ballarò</strong> — ancient street market. Wander for blood-orange juice, arancini, panelle."},
-    {time:"1:00pm",dot:"ok",txt:"Lunch at <strong>Moltivolti</strong> — confirmed for 8 (ID 0362-4B81-C9BE-7083)."},
-    {time:"3:00pm",txt:"Back to Villa Minerva. Pool afternoon."},
-    {time:"7:00pm",dot:"pd",txt:"Dinner at <strong>Quattro Mani</strong> — confirm for 8."}
+    {time:"9:30am",txt:"Drive to Palermo (~25 min). Park at <strong>Parcheggio del Centrostorico</strong>, Via Rossini 14 (24h, ~€20–25 half day; staff handle ZTL). Don't drive into the historic centre.",map:"Parcheggio Centro Storico Via Rossini Palermo"},
+    {time:"10:00am",txt:"<strong>Quattro Canti & Fontana Pretoria</strong> — baroque heart & the 'Fountain of Shame'. ~30 min."},
+    {time:"10:30am",txt:"<strong>Palermo Cathedral</strong> — 900 years of layered architecture; rooftop terrace views. ~1 hr."},
+    {time:"11:30am",txt:"<strong>Mercato Ballarò</strong> — wander for arancini, blood-orange juice, panelle."},
+    {time:"1:00pm",dot:"ok",txt:"Casual lunch at <strong>Nino u'Ballerino</strong> — traditional tavola calda, no reservations needed. Pasta al forno, pasta con le sarde, arancini. Cheap, authentic.",map:"Nino u Ballerino Palermo"},
+    {time:"~2:30pm",txt:"Return to Villa Minerva (~25 min). Pool afternoon — rest from the heat."},
+    {time:"6:00pm",txt:"Head back into Palermo for the evening — city comes alive after dark."},
+    {time:"7:00pm",dot:"ok",txt:"Dinner at <strong>Quattro Mani</strong> ✅ — confirmed through Scott."}
   ],
-  blocks2:[{type:"resto",h:"🍽️ Ristorante Quattro Mani",badge:"pd",bd:"Via Francesco Riso 3, Palermo · Rated 4.6 · seafood, truffle ravioli, citrus swordfish, lemon granita.",call:"+39 091 616 5046",map:"Ristorante Quattro Mani Palermo",web:"quattromaniristorante.it"}]},
+  blocks2:[{type:"resto",h:"🍽️ Ristorante Quattro Mani ✅",badge:"ok",bd:"Via Francesco Riso 3, Palermo · Rated 4.6 · seafood, truffle ravioli, citrus swordfish, lemon granita. Confirmed through Scott.",call:"+39 091 616 5046",map:"Ristorante Quattro Mani Palermo",web:"quattromaniristorante.it"}]},
 4:{theme:"minerva",date:"Mon Jun 22",dl:"Day 4",iso:"2026-06-22",title:"Cefalù Day Trip",sub:"Norman cathedral · sandy beach · seafront lunch",mini:["culture:UNESCO","beach:Beach","dining:Dinner"],
   tl:[
     {time:"9:30am",txt:"Drive ~1 hr to Cefalù. Park along the Lungomare seafront (free)."},
     {time:"10:30am",dot:"hi",txt:"<strong>Duomo di Cefalù</strong> — UNESCO Norman cathedral, Christ Pantocrator mosaic, twin towers against La Rocca. Opens 8:30am. ~45 min."},
     {time:"11:15am",txt:"Medieval lanes; almond granita & brioche; pick up pastries; down to the beach."},
     {time:"12:00pm",dot:"beach",txt:"<strong>Cefalù Beach</strong> — wide sand, calm water, La Rocca backdrop. ~45 min swim."},
-    {time:"1:00pm",dot:"pd",txt:"Lunch at <strong>SeaView Restaurant</strong> — pending TheFork confirmation, 8 at 1pm."},
-    {time:"2:30pm",txt:"Browse the corso — ceramics & lemon products. Drive back (~1 hr)."},
-    {time:"7:30pm",dot:"pd",txt:"Dinner at <strong>Il Cambusone</strong>, Palermo — confirm for 8."}
+    {time:"1:00pm",dot:"ok",txt:"Lunch at <strong>SeaView Restaurant</strong> ✅ — confirmed for 8 (TheFork), 1pm.",map:"SeaView Restaurant Cefalù"},
+    {time:"2:30pm",txt:"Browse the corso — ceramics & lemon products. Drive back toward Mondello (~1 hr)."},
+    {time:"7:30pm",dot:"ok",txt:"Dinner at <strong>Corallo — Cucina D'amare</strong> ✅ — confirmed for 8 (TheFork), 7:30pm. Mondello seafront, 5 min from villa."}
   ],
-  blocks2:[{type:"resto",h:"🍽️ Il Cambusone",badge:"pd",bd:"Piazza Sant'Andrea 4, Palermo · Rated 4.7 · lobster ravioli, squid-ink pasta, grilled octopus, mussels.",call:"+39 091 683 2099",map:"Il Cambusone Palermo",web:"ristoranteilcambusone.it"}]},
+  blocks2:[
+    {type:"resto",h:"🍽️ Corallo — Cucina D'amare ✅",badge:"ok",bd:"V.le Regina Elena, 75, 90149 Mondello · TheFork ✅ · 7:30pm · 8 people · Seafront Mondello, 5 min from villa.",map:"Corallo Cucina D'amare Mondello"},
+    {type:"resto",h:"🍽️ SeaView Restaurant ✅",badge:"ok",bd:"Cefalù seafront · TheFork ✅ · 1pm · Lunch for 8.",map:"SeaView Restaurant Cefalù"},
+    {type:"resto",h:"🍽️ Il Cambusone (Scott's backup)",badge:"",bd:"Piazza Sant'Andrea 4, Palermo · +39 091 683 2099 · Scott has separate reservation — alternative if group stays in Cefalù.",call:"+39 091 683 2099",map:"Il Cambusone Palermo"}
+  ]},
 5:{theme:"minerva",date:"Tue Jun 23",dl:"Day 5",iso:"2026-06-23",title:"Castellammare del Golfo",sub:"Guidaloca beach · Arab-Norman castle · Zingaro",mini:["beach:Beach","culture:Castle","dining:Split Dinner"],
   tl:[
     {time:"9:15am",txt:"Depart Villa Minerva. ~25 min via SS187 coastal road. 2 cars."},
     {time:"9:45am",dot:"hi",txt:"<strong>Guidaloca Beach</strong> — crystal water, pebble beach. Free access. Lido Vida Loca sunbeds optional (~€15–20pp)."},
     {time:"12:30pm",txt:"Drive ~15 min into Castellammare town."},
-    {time:"1:00pm",dot:"ok",txt:"Lunch at <strong>H 80 Fame</strong> — confirmed for 8 at 1pm. Best seafood in town."},
+    {time:"1:00pm",dot:"ok",txt:"Lunch at <strong>H 80 Fame</strong> ✅ — confirmed via WhatsApp (Jeff) for 8 at 1pm, Castellammare del Golfo. Best seafood in town."},
     {time:"2:30pm",txt:"Optional: Marina & Castello Arabo-Normanno (Tue 10–1 & 3–7)."},
     {time:"3:00pm",dot:"hi",txt:"⏱️ If time allows — <strong>Riserva dello Zingaro</strong>: 15 min to Scopello entrance, hike ~2km to Cala Bue Marino cove. €5pp, allow 1.5–2 hrs. Bring water & wet-friendly shoes. Closes at sunset."},
     {time:"5:30pm",txt:"Back to villa, pool & freshen up."}
   ],
   blocks:[
-    {type:"split",h:"🔀 Alt for Mary Jo & Bev",bd:"Monreale Cathedral instead (~20 min) — 12th-c. gold Byzantine mosaics (6,000m²), open 9–5:30. Rejoin for H 80 Fame or dine independently."},
-    {type:"resto",h:"🌟 Jeff & Katie — Bye Bye Blues",badge:"ok",bd:"Michelin-starred · Via del Garofalo 23, Palermo · Reservation #683 · 7:30pm for 2. Cancellation €50pp within 2 days.",call:"+39 091 6841415",map:"Bye Bye Blues Mondello"},
-    {type:"resto",h:"🍽️ Rest of Group — Enosteria Sicula",badge:"ok",bd:"Via Torrearsa 3, Palermo · 6:30pm · confirmed.",map:"Enosteria Sicula Palermo"}
+    {type:"resto",h:"🌟 Jeff & Katie — Bye Bye Blues ✅",badge:"ok",bd:"Michelin-starred · Via del Garofalo 23, Palermo · Reservation #683 · 7:30pm for 2. Cancellation €50pp within 2 days.",call:"+39 091 6841415",map:"Bye Bye Blues Mondello"},
+    {type:"resto",h:"🍽️ Rest of Group (6) — Poldo 2 Mondello ✅",badge:"ok",bd:"Via Torre di Mondello, 22c, 90151 Palermo · 7pm · 6 people · confirmed · 5 min from Villa Minerva.",map:"Poldo 2 Mondello"}
   ]},
 6:{theme:"aljafar",date:"Wed Jun 24",dl:"Day 6",iso:"2026-06-24",title:"Segesta & Transfer",sub:"Greek temple · out of Minerva · into Al Jafar",mini:["culture:Greek","villa:Check-in","dining:Cook"],
-  blocks:[{type:"split",h:"🔀 Split morning",bd:"Group may divide — Segesta (archaeology) vs Monreale (mosaics). Both fit the 10am checkout / 4pm check-in."}],
+  blocks:[],
   tl:[
-    {time:"10:00am",txt:"Check out Minerva. <strong>Rich & Scott</strong> head to Agrigento (skip Segesta & lunch), rejoin in Trapani Jun 25. Remaining: Jeff, Katie, Jake, Julia, Mary Jo, Bev."},
-    {time:"10:45am",dot:"pd",txt:"<strong>Parco di Segesta</strong> — 5th-c. BC Doric temple + hilltop theatre. Shuttle up (€2.50). Allow 2–2.5 hrs. Book ahead coopculture.it (€16pp, 6 adults).",map:"Parco Archeologico di Segesta"},
-    {time:"1:15pm",dot:"pd",txt:"Lunch at <strong>La Locanda di Nonna Ciccia</strong>, Calatafimi — call to book for 4."},
+    {time:"10:00am",txt:"Check out Villa Minerva. <strong>Rich & Scott</strong> head directly to Agrigento — skip Segesta & lunch, rejoin full group in Trapani Jun 25. Remaining: Jeff, Katie, Jake, Julia, Mary Jo, Bev."},
+    {time:"11:00am",dot:"ok",txt:"<strong>Parco Archeologico di Segesta</strong> ✅ — Confirmation <strong>HYTTKVY8</strong> · 11am entry · 4 people. 5th-c. BC Doric temple + hilltop theatre. Shuttle bus up €2.50. Allow 2–2.5 hrs.",map:"Parco Archeologico di Segesta"},
+    {time:"1:15pm",txt:"Lunch option: <strong>La Locanda di Nonna Ciccia</strong>, Calatafimi — not booked, call +39 0924 527370 for 4 if wanted. Or casual nearby."},
     {time:"2:30pm",txt:"Drive to Al Jafar (~40 min). Explore citrus groves if early."},
     {time:"4:00pm",txt:"Check in <strong>Al Jafar</strong> — Contrada Castellaccio, Paceco. Castle villa, walled gardens, 18m pool.",map:"Al Jafar Paceco Trapani"},
     {time:"8:00pm",dot:"hi",txt:"Private cook dinner (cook arrives 6pm)."}
   ],
   blocks2:[
-    {type:"menu",h:"Al Jafar — First Night",courses:[["Antipasto","Pantesca salad — cherry tomato, capers, basil, oregano, red onion, olives"],["Primo","Busiate with Trapanese pesto"],["Secondo","Risotto ai frutti di mare — seafood, white wine, cherry tomatoes, herbs"],["Dolce","Cassata Siciliana — ricotta, almond paste"]]},
-    {type:"alert",h:"⚠️ Cook menu",bd:"Submit to The Thinking Traveller by June 17 · £65/person · +44 (0)20 3603 4478."}
+    {type:"menu",h:"Al Jafar — First Night Cook Dinner ✅",courses:[["Starter","Bruschetta with fresh tomato and basil"],["Pasta","Seafood risotto — no cream, no milk, no shrimp (lactose-free)"],["Main","Sardine meatballs with mint and tomato sauce"],["Dessert","Cannoli with ricotta cheese"]]}
   ]},
 7:{theme:"aljafar",date:"Thu Jun 25",dl:"Day 7",iso:"2026-06-25",title:"Trapani & Erice",sub:"Hilltop town · cable car · salt pans · group dinner",mini:["culture:Erice","beach:Salt Pans","dining:Group Dinner"],
   tl:[
@@ -405,8 +408,8 @@ const DAYS={
     {time:"10:00am",txt:"<strong>Trapani-Erice Cable Car</strong> — €11 return, 10–15 min, views over salt pans. Walk-up, opens 9:30am Thu. Can close in high wind — SP3 drive as backup."},
     {time:"10:15am",dot:"hi",txt:"<strong>Erice</strong> — preserved medieval hilltop town, Castello di Venere, limestone lanes, views to Tunisia."},
     {time:"11:30am",txt:"🍋 Almond pastries & granita — Erice's famous export. Non-negotiable."},
-    {time:"12:30pm",txt:"Lunch — Plan A: Gusto Panino Gourmet (quick, A/C) · Plan B: Osteria di Venere if confirmed."},
-    {time:"2:00pm",txt:"Cable car back down."},
+    {time:"1:00pm",dot:"ok",txt:"Lunch at <strong>Osteria di Venere</strong> ✅ — confirmed via WhatsApp · 1pm · sit-down Sicilian seafood in the hilltop village."},
+    {time:"2:45pm",txt:"Cable car back down to Trapani."},
     {time:"2:30pm",dot:"beach",txt:"<strong>Saline di Trapani</strong> — salt pans & windmills, scenic ~45 min coastal drive. Scott explores Trapani solo."},
     {time:"3:30pm",txt:"Back to Al Jafar, pool."},
     {time:"7:00pm",dot:"ok",txt:"Dinner at <strong>Locanda Botteghelle</strong> — confirmed for 8 (incl. Rich & Scott)."}
@@ -416,24 +419,24 @@ const DAYS={
   blocks:[{type:"alert",h:"✅ Hydrofoil booked",bd:"Liberty Lines e-tickets confirmed for all 8. Save tickets to your phone before departure day."}],
   tl:[
     {time:"9:00am",txt:"Depart Al Jafar. ~15 min to Trapani port; park near Liberty Lines, Via Ammiraglio Staiti 55–61."},
-    {time:"9:30am",txt:"<strong>Hydrofoil Trapani → Favignana</strong> — 30 min crossing."},
+    {time:"9:30am",dot:"ok",txt:"<strong>Hydrofoil Trapani → Favignana</strong> ✅ — e-tickets confirmed, 30 min crossing."},
     {time:"10:00am",txt:"Arrive Favignana. Hire 2 Ape tuk tuks at the port — agree fare before each ride."},
     {time:"10:15am",dot:"hi",txt:"<strong>Cala Azzurra</strong> — the island's finest sandy beach, turquoise & calm, great for kids. Arrive early; no service, bring water/snacks."},
     {time:"12:15pm",txt:"Tuk tuk back; photo stop at <strong>Cala Rossa</strong> — dramatic rocky cove (better photo than swim for this group)."},
-    {time:"1:00pm",dot:"pd",txt:"Lunch at <strong>Ammàri Racconti e Cucina di Mare</strong> — pending confirmation, 8 at 1pm. Creative seafood, 4.6."},
+    {time:"1:00pm",txt:"Casual street food / lunch in Favignana town — no reservation. Regroup with Mary Jo here. Mary Jo likely explores town independently while group is at the beach."},
     {time:"2:30pm",txt:"Explore town, gelato, tuna shops; back to port."},
-    {time:"4:30pm",txt:"Hydrofoil Favignana → Trapani."},
+    {time:"4:30pm",dot:"ok",txt:"<strong>Hydrofoil Favignana → Trapani</strong> ✅ — e-tickets confirmed."},
     {time:"7:00pm",dot:"ok",txt:"Dinner at <strong>Bromu</strong>, Trapani — confirmed for 8."}
   ],
   blocks2:[{type:"resto",h:"🌟 Bromu Restaurant",badge:"ok",bd:"Viale Regina Elena 10, Trapani · Rated 4.8 · husband & wife run, exceptional seafood, lovely outdoor seating · ~15 min from Al Jafar.",call:"+39 375 654 6077",map:"Bromu Restaurant Trapani"}]},
 9:{theme:"aljafar",date:"Sat Jun 27",dl:"Day 9",iso:"2026-06-27",title:"Selinunte & La Foresteria Planeta Estate",sub:"Quiet villa morning · Selinunte 4pm · Farewell dinner at Planeta winery",mini:["culture:Selinunte","dining:Planeta Estate","villa:Last Al Jafar Day"],
-  blocks:[{type:"decision",h:"🔀 Group choice morning",bd:"<strong>A</strong> — Selinunte Archaeological Park (~45 min, one of Europe's largest Greek parks, electric cart €17pp, opens 9am). <strong>B</strong> — Al Jafar villa day: pool, gardens, kids' play area. Also nearby: Marsala wine tasting · Mozia Phoenician island boat · Zingaro (hardy walkers)."}],
-  tl:[{time:"Evening",dot:"ok",txt:"Quiet last morning at Al Jafar — swim, pack, gardens. Last breakfast. Leave ~3pm."},{time:"4:00pm",dot:"pd",dot:"ok",txt:"Selinunte ✅ — 4pm entry, tickets confirmed (in email). Electric cart €17pp. Allow 2–2.5 hrs."},{time:"6:30pm",txt:"Drive ~45 min toward Menfi — La Foresteria Planeta Estate."},{time:"7:30pm",dot:"ok",txt:"Farewell Sicily dinner at La Foresteria Planeta Estate ✅ — confirmed through Scott."}],
+  blocks:[],
+  tl:[{time:"Morning",txt:"Quiet last morning at Al Jafar — swim, pack, gardens. Last breakfast. Leave ~3pm."},{time:"4:00pm",dot:"ok",txt:"Selinunte ✅ — 4pm entry, tickets confirmed (in email). Electric cart €17pp. Allow 2–2.5 hrs."},{time:"6:30pm",txt:"Drive ~45 min toward Menfi — La Foresteria Planeta Estate."},{time:"7:30pm",dot:"ok",txt:"Farewell Sicily dinner at La Foresteria Planeta Estate ✅ — confirmed through Scott."}],
   blocks2:[{type:"resto",h:"🍷 La Foresteria Planeta Estate ✅",badge:"ok",bd:"SP79 Km 91, Contrada Passo di Gurra, 92013 Menfi AG · Sat Jun 27, 7:30pm · confirmed through Scott · ~1hr 15min from Al Jafar",map:"La Foresteria Planeta Estate Menfi"}]},
 10:{theme:"rome",date:"Sun Jun 28",dl:"Day 10",iso:"2026-06-28",title:"Palermo → Rome",sub:"Return cars · all 8 fly together · Via Veneto",mini:["travel:Transfer","dining:Arrival Dinner"],
   tl:[
     {time:"9:30am",txt:"Check out Al Jafar."},
-    {time:"10:30am",txt:"Arrive Palermo (PMO). Europcar drop-off 12:00pm (#1198342651 & #1198342794)."},
+    {time:"10:30am",txt:"Arrive Palermo (PMO). Return Avis rental cars by 12:00pm (#1198342651 & #1198342794)."},
     {time:"12:15pm",txt:"<strong>ITA AZ1784</strong> PMO → FCO · all 8 passengers · arrives 1:15pm."},{time:"1:30pm",dot:"ok",txt:"Confirmed private transfer FCO → apartment ✅ · €110 cash to driver."},{time:"2:00pm",dot:"ok",txt:"Check in — Roma Prestigious Apartment, Via Veneto ✅ · 🛋️ Scott on sofa bed tonight only."},
     {time:"Afternoon",txt:"Freshen up · stroll Via Veneto · Trevi Fountain (10 min walk) · aperitivo."},
     {time:"Evening",dot:"pd",txt:"Dinner at <strong>Ristorante Life</strong> ✅ · 6:30pm · 8 people · confirmed through Scott."}
