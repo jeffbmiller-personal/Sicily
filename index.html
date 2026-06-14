@@ -456,8 +456,9 @@ const DAYS={
   blocks2:[{type:"resto",h:"🍽️ Fraschetteria ✅",badge:"ok",bd:"Via dei Cappuccini, 29 · Tue Jun 30 · 7 people · confirmed · 5 min walk from apartment · Tagliatelle al tartufo, pistachio tiramisu · Rated 4.6",call:"+39 06 6941 2861",map:"Fraschetteria Via dei Cappuccini Rome"}]},
 13:{theme:"rome",date:"Wed Jul 1",dl:"Day 13",iso:"2026-07-01",title:"Departures",sub:"Rome → Boston · Mary Jo & Bev train to Florence",mini:["travel:Departure","culture:Florence Ext."],
   blocks:[
+    {type:"alert",h:"🚗 Departure transfer ✅",bd:"Private transfer apartment → FCO · Confirmed through apartment booking · Pickup <strong>7:30am · €100 cash to driver</strong> · Jeff, Katie, Jake, Julia + Rich"},
     {type:"flight",route:"Jeff, Katie, Jake, Julia · FCO → BOS",detail:"ITA AZ614 · 10:25am → 1:40pm"},
-    {type:"flight",route:"Rich · FCO → EWR",detail:"Separate booking · Jul 1"},
+    {type:"flight",route:"Rich · FCO → EWR",detail:"Separate booking · rides with Jeff's group to FCO"},
     {type:"flight",route:"Mary Jo & Bev · Roma → Firenze SMN",detail:"Italo ✅ · 10:55am → 12:31pm · booked"}
   ],
   blocks_b:[{type:"split",h:"Mary Jo & Bev — Florence afternoon",bd:"<strong>Ponte Vecchio</strong> (best in afternoon light) · <strong>Piazza della Signoria</strong> (open-air sculpture) · <strong>Duomo</strong> exterior (inside tour is Jul 2) · <strong>Piazzale Michelangelo</strong> at sunset — the only evening for it."}]},
@@ -502,28 +503,25 @@ const TTT="+44 (0)20 3603 4478";
 
 /* ============ CHECKLIST ============ */
 const CHECKLIST=[
-  {g:"urgent",label:"🔴 Immediate / Urgent",items:[
+  {g:"urgent",label:"🔴 Still Needed",items:[
+    {id:"c19",t:"Airport taxi Florence — arrange via concierge",d:"⚠️ Ask Sina Villa Medici concierge on arrival Jul 1 · Pickup 4:30am Jul 3 · AZ1676 departs FLR 6:25am"}
+  ]},
+  {g:"week",label:"🟡 Optional",items:[
+    {id:"c7",t:"Lido Vida Loca — sunbeds (optional)",d:"Guidaloca · Jun 23",call:"+39 338 742 0063"},
+    {id:"c8",t:"La Locanda di Nonna Ciccia (optional)",d:"4 people · Jun 24 (Rich & Scott to Agrigento)",call:"+39 0924 527370"}
+  ]},
+  {g:"confirm",label:"✅ All Confirmed",items:[
     {id:"c1",t:"Liberty Lines Hydrofoil — Favignana",d:"✅ BOOKED · Jun 26 · 8 guests · save to phone",done:true},
-    {id:"c2",t:"Castel Sant'Angelo tickets",d:"2 adults + 2 kids · Jun 30 · €18/~€2",book:"ticketone.it"},
-    {id:"c3",t:"Pantheon timed entry",d:"2 adults + 2 kids · Jun 30 · €5pp",book:"pantheonroma.com"},
-    {id:"c4",t:"Segesta tickets",d:"6 adults · Jun 24 · €16pp",book:"coopculture.it"},
-    {id:"c5",t:"Confirm SeaView, Cefalù",d:"TheFork pending · Jun 22 · 8 · 1pm"},
-    {id:"c6",t:"Confirm Ammàri, Favignana",d:"TheFork pending · Jun 26 · 8 · 1pm"},
-    {id:"c7",t:"Lido Vida Loca — sunbeds",d:"Guidaloca · Jun 23",call:"+39 338 742 0063"},
-    {id:"c8",t:"La Locanda di Nonna Ciccia — lunch",d:"4 people · Jun 24 (Rich & Scott to Agrigento)",call:"+39 0924 527370"}
-  ]},
-  {g:"week",label:"🟡 This Week",items:[
-    {id:"c9",t:"Fraschetteria ✅ — confirmed for 7",d:"Jun 30 · Via dei Cappuccini 29 · confirmed",call:"+39 06 6941 2861"},
-    {id:"c11",t:"Submit Al Jafar cook menu",d:"By Jun 17 · menu selected ✅ · TTT",call:TTT}
-  ]},
-  {g:"confirm",label:"🔵 Still to Confirm",items:[
-    {id:"c13",t:"Il Cambusone for 8",d:"Jun 22 · Palermo",call:"+39 091 683 2099"},
-    {id:"c14",t:"Quattro Mani for 8",d:"Jun 21 · Palermo",call:"+39 091 616 5046"},
-    {id:"c15",t:"Osteria di Venere, Erice",d:"Jun 25 lunch backup · awaiting WhatsApp",call:"+39 0923 869362"},
+    {id:"c2",t:"Castel Sant'Angelo — 5 tickets",d:"✅ CONFIRMED · Jeff, Katie, Rich, Jake, Julia · Jun 30 9:30am · tickets in email",done:true},
+    {id:"c4",t:"Segesta archaeological park",d:"✅ CONFIRMED · Ref HYTTKVY8 · Jun 24 11am · 4 people",done:true},
+    {id:"c5",t:"SeaView Restaurant, Cefalù",d:"✅ CONFIRMED · TheFork · Jun 22 · 8 people · 1pm",done:true},
+    {id:"c14",t:"Quattro Mani, Palermo",d:"✅ CONFIRMED through Scott · Jun 21 dinner",done:true},
+    {id:"c15",t:"Osteria di Venere, Erice",d:"✅ CONFIRMED via WhatsApp · Jun 25 · 1pm lunch",done:true},
+    {id:"c9",t:"Fraschetteria, Rome",d:"✅ CONFIRMED · Jun 30 · 7 people · Via dei Cappuccini 29",done:true},
+    {id:"c11",t:"Al Jafar cook menu",d:"✅ SUBMITTED · Bruschetta · Seafood risotto · Sardine meatballs · Cannoli",done:true},
     {id:"c16",t:"MJ & Bev — Vatican tour",d:"✅ CONFIRMED · Viator #1736906741 · Jun 30 08:15 · $319.50",done:true},
-    {id:"c17",t:"MJ & Bev — train Rome→Florence",d:"Jul 1 · Trenitalia/Italo · book ahead"},
-    {id:"c18",t:"MJ & Bev — Florence hotel",d:"✅ Sina Villa Medici · Jul 1–3 · taxi still to book",done:true},
-    {id:"c19",t:"MJ & Bev — airport taxi FLR",d:"Jul 2 night · for 6:25am Jul 3 · via concierge"},
+    {id:"c17",t:"MJ & Bev — Italo train Rome→Florence",d:"✅ BOOKED · Jul 1 · 10:55am→12:31pm · Bev has tickets",done:true},
+    {id:"c18",t:"MJ & Bev — Sina Villa Medici, Florence",d:"✅ CONFIRMED · Via Il Prato 42 · Jul 1–3 · Harry's Bar on-site",done:true},
     {id:"c20",t:"MJ & Bev — Uffizi & Accademia",d:"✅ CONFIRMED · Viator #1698207435 · Jul 2 10:15 · $305.60",done:true}
   ]}
 ];
